@@ -158,8 +158,64 @@ button:focus, select:focus, input:focus{
 }
 /* -- end #header -- */
 
+/* -- #route -- */
+#route{
+    padding-top: 12px;
+    border-bottom: 3px double rgb(207, 211, 221);
+}
+#route p{
+    display: block;
+    float: left;
+    padding: 0 8px 8px 0;
+}
+#route p span{
+    position: relative;
+    bottom: 1px;
+    padding-right: 8px;
+}
+/* -- end #route -- */
+
+/* -- #button -- */
+#button{
+    padding: 8px 14px 6px 14px;
+    background: rgb(47, 93, 191);
+    font-size: 12px;
+    color: rgb(209, 212, 220);
+    border-radius: 3px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#button:hover{
+    background: rgb(47, 84, 164);
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+#button:active{
+    background: rgb(255, 0, 0);
+}
+/* -- end #button -- */
+
 /* -- general -- */
 .clear{
     clear: both;
+}
+.name{
+    padding: 12px 16px 2px 16px;
+}
+.input{
+    margin: 0 10px;
+    padding: 0 8px;
+    border: 1px solid rgb(207, 211, 221);
+}
+.input-warning{
+    padding: 2px 16px;
+    color: rgb(255, 0, 0);
+}
+.button{
+    padding: 20px 10px 30px 10px;
+}
+.button-double{
+    margin-top: 18px;
+    border-top: 3px double rgb(207, 211, 221);
 }
 /* -- end general -- */

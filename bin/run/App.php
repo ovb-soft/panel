@@ -19,7 +19,7 @@ class App {
     private function _app()
     {
         $this->_app = unserialize(file_get_contents(DATA . 'app.sz'));
-        $this->_branches();
+        $this->_app['root'] ? $this->_branches() : new panel\core\login\initial\Root;
     }
 
     private function _branches()

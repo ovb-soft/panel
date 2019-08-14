@@ -17,6 +17,7 @@ class Data {
     private function _app()
     {
         file_put_contents(DATA . 'app.sz', serialize([
+            'root' => false,
             'ext' => '.ww'
         ]));
         $this->_panel_langs();
@@ -31,6 +32,15 @@ class Data {
                 'ru' => 'Русский'
             ],
             'multilang' => false
+        ]));
+        $this->_panel_auth();
+    }
+
+    private function _panel_auth()
+    {
+        file_put_contents($this->_panel . 'auth.sz', serialize([
+            'block' => 3,
+            'timer' => 1800
         ]));
         $this->_header();
     }

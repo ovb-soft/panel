@@ -12,10 +12,17 @@ class Panel extends core\Core {
 
     private function _logout()
     {
+        setcookie('hash', '', 0, '/');
+        setcookie('user', '', 0, '/');
         header('Location: /');
     }
 
     private function _login()
+    {
+        isset(AUTH['wg']) ? new core\login\Login : $this->_module();
+    }
+
+    private function _module()
     {
         $this->res['content'] = '';
         $this->echo();

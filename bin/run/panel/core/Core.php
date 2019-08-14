@@ -11,6 +11,7 @@ class Core extends Auth {
     protected function core()
     {
         parent::auth();
+        define('HTML', require 'html' . D . 'pattern.php');
     }
 
     protected function echo()
