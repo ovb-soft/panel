@@ -2,6 +2,8 @@
 
 namespace run\panel\core;
 
+define('CORE', __DIR__ . D);
+
 class Core extends Auth {
 
     protected $res;

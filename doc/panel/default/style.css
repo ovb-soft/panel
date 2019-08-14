@@ -100,6 +100,62 @@ button:focus, select:focus, input:focus{
 #header .right a:active{
     color: rgb(255, 0, 0);
 }
+#header .right .hover{
+    position: relative;
+    bottom: 1px;
+    list-style-type: none;
+}
+#header .right .hover a{
+    display: block;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    font-size: 14px;
+    color: rgb(47, 93, 191);
+    font-weight: normal;
+}
+#header .right .hover a:hover{
+    color: rgb(47, 84, 164);
+    text-decoration: underline;
+}
+#header .right .hover button{
+    margin-bottom: 10px;
+    white-space: nowrap;
+}
+#header .right .hover button img{
+    margin-right: 10px;
+    vertical-align: middle;
+    border: 1px solid rgb(200, 203, 203);
+}
+#header .right .hover button:hover img{
+    border: 1px solid rgb(47, 84, 164);
+}
+#header .right .hover div{
+    position: relative;
+    z-index: 1;
+    padding: 8px 10px 0 10px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(200, 203, 203);
+}
+#header .right .hover li:first-child{
+    padding: 1px 2px 0 0;
+    text-align: right;
+    color: rgb(209, 212, 220);
+    opacity: .7;
+    cursor: default;
+}
+#header .right .hover:hover li:first-child{
+    color: rgb(255, 255, 255);
+    opacity: 1;
+}
+#header .right .hover li:last-child{
+    position: absolute;
+    display: none;
+    right: -4px;
+    padding-top: 8px;
+}
+#header .right .hover:hover li:last-child{
+    display: block;
+}
 /* -- end #header -- */
 
 /* -- general -- */
