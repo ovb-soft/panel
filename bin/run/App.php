@@ -52,9 +52,18 @@ class App {
 
     private function _panel()
     {
+        http_response_code(404);
         define('EXT', $this->_app['ext']);
-        define('PATH', $this->_path);
+        define('PATH', $this->_path + $this->_panel_path());
         new panel\Panel;
+    }
+
+    private function _panel_path()
+    {
+        $exp = explode('/', $this->_path['path']);
+        return [
+            'class' => mb_convert_case(end($exp), MB_CASE_TITLE)
+        ];
     }
 
     private function _open()

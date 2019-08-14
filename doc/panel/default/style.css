@@ -195,6 +195,26 @@ button:focus, select:focus, input:focus{
 }
 /* -- end #button -- */
 
+/* -- #id-error -- */
+#id-error{
+    padding: 20px 10px 30px 10px;
+    color: rgb(255, 0, 0);
+}
+/* -- end #id-error -- */
+
+/* -- #menu -- */
+#menu{
+    padding: 20px 10px 30px 10px;
+    list-style-type: none;
+}
+#menu li{
+    padding-bottom: 8px;
+}
+#menu li:last-child{
+    padding-bottom: 0;
+}
+/* -- end #menu -- */
+
 /* -- general -- */
 .clear{
     clear: both;

@@ -2,6 +2,8 @@
 
 namespace run\panel;
 
+define('MODULE', __DIR__ . D . 'module' . D);
+
 class Panel extends core\Core {
 
     public function __construct()
@@ -19,13 +21,26 @@ class Panel extends core\Core {
 
     private function _login()
     {
-        isset(AUTH['wg']) ? new core\login\Login : $this->_module();
+        isset(AUTH['wg']) ? new core\login\Login : $this->_error_404();
+    }
+
+    private function _error_404()
+    {
+        ERROR ? $this->_error_code('404') : $this->_module();
+        $this->echo();
+    }
+
+    private function _error_code($code)
+    {
+        $this->res['content'] = str_replace('{ E }', LT[$code]['content'], HTML['id-error']);
     }
 
     private function _module()
     {
-        $this->res['content'] = '';
-        $this->echo();
+        $run = '\\run\\panel\\module\\' .
+                str_replace('/', '\\', PATH['path']) . '\\' .
+                PATH['class'];
+        $this->res = (new $run)->module();
     }
 
 }

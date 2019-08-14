@@ -14,7 +14,7 @@ echo '<!DOCTYPE html>
     <body>
         <div id="header">
             <div class="container">
-                <div class="left"><div class="logo"></div></div>
+                <div class="left">' . LOGO . '</div>
                 <div class="right"><a href="/logout' . EXT . '"><i class="icon-logout"></i>' . LT['sign_out-upp'] . '</a></div>' . LANGS . '
                 <div class="clear"></div>
             </div>
