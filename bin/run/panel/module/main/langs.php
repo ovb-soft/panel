@@ -3,12 +3,12 @@
 return [
     'en' => [
         'le' => [
-            'error' => 'Error 404'
+            'settings' => 'Settings'
         ]
     ],
     'ru' => [
         'le' => [
-            'error' => 'Ошибка 404'
+            'settings' => 'Настройки'
         ]
     ]
 ];

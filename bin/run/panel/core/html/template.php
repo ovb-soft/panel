@@ -6,10 +6,10 @@ echo '<!DOCTYPE html>
         <meta charset="utf-8">
         <meta name="google" content="notranslate">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>' . LT['title'] . '</title>
+        <title>' . LT['title'] . TITLE . '</title>
         <link rel="icon" href="/panel/default/favicon.ico">
         <link rel="stylesheet" href="/panel/icon/font.css">
-        <link rel="stylesheet" href="/panel/default/style.css">
+        <link rel="stylesheet" href="/panel/default/style.css">' . HEAD . '
     </head>
     <body>
         <div id="header">
@@ -19,7 +19,7 @@ echo '<!DOCTYPE html>
                 <div class="clear"></div>
             </div>
         </div>
-        <div class="container">' . CONTENT . '
+        <div class="container">' . ROUTE . CONTENT . '
         </div>
     </body>
 </html>';

@@ -2,5 +2,5 @@
 
 return '
             <ul id="menu">
-                <li><a href="/error' . EXT . '">' . LE['error'] . '</a></li>
+                <li><a href="/settings' . EXT . '">' . LE['settings'] . '</a></li>
             </ul>';

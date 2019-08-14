@@ -62,7 +62,8 @@ class App {
     {
         $exp = explode('/', $this->_path['path']);
         return [
-            'class' => mb_convert_case(end($exp), MB_CASE_TITLE)
+            'class' => mb_convert_case(end($exp), MB_CASE_TITLE),
+            'exp' => $exp
         ];
     }
 

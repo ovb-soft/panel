@@ -39,7 +39,7 @@ class Data {
     private function _panel_auth()
     {
         file_put_contents($this->_panel . 'auth.sz', serialize([
-            'block' => 3,
+            'block' => 2,
             'timer' => 1800
         ]));
         $this->_header();

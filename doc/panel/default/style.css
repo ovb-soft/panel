@@ -1,14 +1,19 @@
-html, body{
-    background: rgb(255, 255, 255);
-}
 *{
     margin: 0;
     padding: 0;
 }
+html,
+body{
+    background: rgb(255, 255, 255);
+}
 table{
     border-collapse: collapse;
 }
-html, body, button, input, textarea{
+html,
+body,
+button,
+input,
+textarea{
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     line-height: 1.5;
@@ -18,7 +23,8 @@ select{
     padding: 4px 8px;
     border: 1px solid rgb(203, 207, 217);
 }
-input[type="text"], input[type="password"]{
+input[type="text"],
+input[type="password"]{
     width: 100%;
     padding: 4px 8px;
     border: 0;
@@ -36,18 +42,23 @@ button{
     border: none;
     cursor: pointer;
 }
-a, button{
+a,
+button{
     color: rgb(47, 93, 191);
     text-decoration: none;
 }
-a:hover, button:hover{
+a:hover,
+button:hover{
     color: rgb(47, 84, 164);
     text-decoration: underline;
 }
-a:active, button:active{
+a:active,
+button:active{
     color: rgb(255, 0, 0);
 }
-button:focus, select:focus, input:focus{
+button:focus,
+select:focus,
+input:focus{
     outline: 0;
 }
 
@@ -215,9 +226,39 @@ button:focus, select:focus, input:focus{
 }
 /* -- end #menu -- */
 
+/* -- #table -- */
+#table .td-solid{
+    padding: 8px 10px;
+    border-bottom: 1px solid rgb(207, 211, 221);
+}
+#table .td-solid-vertical{
+    padding: 8px 0;
+    border-bottom: 1px solid rgb(207, 211, 221);
+}
+#table .td-solid-select{
+    padding: 5px 10px;
+    border-bottom: 1px solid rgb(207, 211, 221);
+}
+#table .radio span{
+    padding-left: 4px;
+    padding-right: 10px;
+}
+#table .radio span:last-child{
+    padding-right: 0;
+}
+#table .td-button{
+    margin-top: 1px;
+    padding: 20px 10px 30px 10px;
+    border-top: 1px solid rgb(207, 211, 221);
+}
+/* -- end #table -- */
+
 /* -- general -- */
 .clear{
     clear: both;
+}
+.red{
+    color: rgb(255, 0, 0);
 }
 .name{
     padding: 12px 16px 2px 16px;

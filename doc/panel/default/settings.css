@@ -1,0 +1,4 @@
+#table select[name="block"],
+#table select[name="timer"]{
+    width: 110px;
+}

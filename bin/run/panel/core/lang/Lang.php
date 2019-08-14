@@ -18,8 +18,8 @@ class Lang {
         if ($this->_lang['multilang']) {
             return $lang;
         }
-        if (filter_has_var(0, 'lang')) {
-            $post = filter_input(0, 'lang');
+        if (filter_has_var(0, 'core:lang')) {
+            $post = filter_input(0, 'core:lang');
             if (isset($this->_lang['langs'][$post])) {
                 setcookie('lang', $post, strtotime('+ 1 year'), '/');
                 $lang = $post;
@@ -56,7 +56,7 @@ class Lang {
         $post = filter_input_array(0);
         if ($post !== null) {
             foreach ($post as $k => $v) {
-                if ($k === 'lang') {
+                if ($k === 'core:lang') {
                     continue;
                 }
                 $hidden .= ($k === 'login' or $k === 'post') ?
