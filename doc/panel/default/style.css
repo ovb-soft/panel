@@ -9,6 +9,13 @@ body{
 table{
     border-collapse: collapse;
 }
+table td{
+    vertical-align: middle;
+    text-align: left;
+}
+form p{
+    display: block;
+}
 html,
 body,
 button,
@@ -74,6 +81,15 @@ input:focus{
     }
 }
 /* -- end .container -- */
+
+/* -- general -- */
+.clear{
+    clear: both;
+}
+.red{
+    color: rgb(255, 0, 0);
+}
+/* -- end general -- */
 
 /* -- #header -- */
 #header{
@@ -208,18 +224,18 @@ input:focus{
 
 /* -- #id-error -- */
 #id-error{
-    padding: 20px 10px 30px 10px;
+    padding: 24px 10px 30px 10px;
     color: rgb(255, 0, 0);
 }
 /* -- end #id-error -- */
 
 /* -- #menu -- */
 #menu{
-    padding: 20px 10px 30px 10px;
+    padding: 24px 10px 30px 10px;
     list-style-type: none;
 }
 #menu li{
-    padding-bottom: 8px;
+    padding-bottom: 12px;
 }
 #menu li:last-child{
     padding-bottom: 0;
@@ -227,56 +243,44 @@ input:focus{
 /* -- end #menu -- */
 
 /* -- #table -- */
-#table .td-solid{
-    padding: 8px 10px;
-    border-bottom: 1px solid rgb(207, 211, 221);
+#table .block{
+    padding: 10px;
 }
-#table .td-solid-vertical{
-    padding: 8px 0;
-    border-bottom: 1px solid rgb(207, 211, 221);
-}
-#table .td-solid-select{
-    padding: 5px 10px;
-    border-bottom: 1px solid rgb(207, 211, 221);
-}
-#table .radio span{
-    padding-left: 4px;
+#table .line{
+    padding-left: 10px;
     padding-right: 10px;
 }
-#table .radio span:last-child{
-    padding-right: 0;
+#table .solid{
+    border-bottom: 1px solid rgb(207, 211, 221);
 }
-#table .td-button{
+#table .button{
     margin-top: 1px;
     padding: 20px 10px 30px 10px;
     border-top: 1px solid rgb(207, 211, 221);
 }
+#table .footer{
+    margin-top: 1px;
+    height: 30px;
+    border-top: 1px solid rgb(207, 211, 221);
+}
 /* -- end #table -- */
 
-/* -- general -- */
-.clear{
-    clear: both;
-}
-.red{
-    color: rgb(255, 0, 0);
-}
-.name{
+/* -- #block -- */
+#block .name{
     padding: 12px 16px 2px 16px;
 }
-.input{
+#block .input{
     margin: 0 10px;
     padding: 0 8px;
     border: 1px solid rgb(207, 211, 221);
 }
-.input-warning{
+#block .input-warning{
     padding: 2px 16px;
     color: rgb(255, 0, 0);
 }
-.button{
-    padding: 20px 10px 30px 10px;
-}
-.button-double{
+#block .button{
     margin-top: 18px;
+    padding: 20px 10px 30px 10px;
     border-top: 3px double rgb(207, 211, 221);
 }
-/* -- end general -- */
+/* -- end #block -- */

@@ -3,12 +3,14 @@
 return [
     'en' => [
         'le' => [
-            'settings' => 'Settings'
+            'settings' => 'Settings',
+            'personal' => 'Personal area'
         ]
     ],
     'ru' => [
         'le' => [
-            'settings' => 'Настройки'
+            'settings' => 'Настройки',
+            'personal' => 'Личный кабинет'
         ]
     ]
 ];

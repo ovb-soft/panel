@@ -13,6 +13,7 @@ class App {
 
     public function __construct()
     {
+        define('TS', (int) time());
         file_exists(DATA) ? $this->_app() : new panel\core\login\initial\Data;
     }
 

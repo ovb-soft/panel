@@ -21,7 +21,6 @@ class Root extends \run\panel\core\lang\Lang {
         'wg_pass' => '',
         'wg_confirm' => ''
     ];
-    private $_time;
 
     public function __construct()
     {
@@ -124,7 +123,7 @@ class Root extends \run\panel\core\lang\Lang {
     private function _wg_pass()
     {
         if (!empty($this->_hl['pass'])) {
-            if (!preg_match("'^[a-z0-9]{4,64}$'i", $this->_hl['pass'])) {
+            if (!preg_match("'^[a-z0-9]{4,32}$'i", $this->_hl['pass'])) {
                 $this->_wg['wg_pass'] = str_replace('{ W }', LE_TMP['wg_pass'], HTML['wg']);
             }
         }
@@ -167,10 +166,9 @@ class Root extends \run\panel\core\lang\Lang {
 
     private function _save_mail()
     {
-        $this->_time = time();
         file_put_contents($this->_dir['mail'] . 'pass.sz', serialize([
             'pass' => password_hash($this->_hl['pass'], PASSWORD_DEFAULT),
-            'time' => $this->_time
+            'time' => TS
         ]));
         file_put_contents($this->_dir['mail'] . 'user.sz', serialize([
             'user' => $this->_hl['user'],
@@ -183,11 +181,13 @@ class Root extends \run\panel\core\lang\Lang {
     {
         $hash = $this->hash(32);
         file_put_contents($this->_dir['user'] . 'data.sz', serialize([
+            'created' => TS,
+            'mail' => $this->_hl['mail'],
             'status' => 'root'
         ]));
         file_put_contents($this->_dir['user'] . 'hash.sz', serialize([
             'hash' => $hash,
-            'time' => $this->_time,
+            'time' => TS,
             'agent' => filter_input(5, 'HTTP_USER_AGENT')
         ]));
         setcookie('user', $this->_hl['user'], 0, '/');

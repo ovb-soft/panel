@@ -1,3 +1,10 @@
+#table .radio span{
+    padding-left: 4px;
+    padding-right: 10px;
+}
+#table .radio span:last-child{
+    padding-right: 0;
+}
 #table select[name="block"],
 #table select[name="timer"]{
     width: 110px;

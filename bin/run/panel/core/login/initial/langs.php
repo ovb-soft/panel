@@ -18,7 +18,7 @@ return [
         'wg_mail_exists' => 'Such email already exists',
         'wg_user' => 'Allowed to use from 2 to 32 characters: A-Za-z0-9, hyphen, underline and space',
         'wg_user_exists' => 'This login already exists',
-        'wg_pass' => 'Acceptable to use from 4 to 64 characters: A-Za-z0-9',
+        'wg_pass' => 'Acceptable to use from 4 to 32 characters: A-Za-z0-9',
         'wg_not_match' => 'Passwords do not match',
         'create-upp' => 'CREATE'
     ],
@@ -39,7 +39,7 @@ return [
         'wg_mail_exists' => 'Такая эл. почта уже существует',
         'wg_user' => 'Вы можете использовать от 2 до 32 символов: A-Za-z0-9, дефис, подчеркивание и пробел',
         'wg_user_exists' => 'Такой логин уже существует',
-        'wg_pass' => 'Допустимо использовать от 4 до 64 символов: A-Za-z0-9',
+        'wg_pass' => 'Допустимо использовать от 4 до 32 символов: A-Za-z0-9',
         'wg_not_match' => 'Пароли не совпадают',
         'create-upp' => 'СОЗДАТЬ'
     ]

@@ -50,13 +50,12 @@ class Auth extends lang\Lang {
 
     private function _block()
     {
-        $this->_data['time'] = time();
         $pass = unserialize(file_get_contents($this->_dir['mail'] . 'pass.sz'));
         $time = $pass['time'];
-        $pass['time'] = $this->_data['time'];
+        $pass['time'] = TS;
         file_put_contents($this->_dir['mail'] . 'pass.sz', serialize($pass));
         $block = unserialize(file_get_contents(DATA . 'panel' . D . 'auth.sz'))['block'];
-        if ($this->_data['time'] - $block > $time) {
+        if (TS - $block > $time) {
             return $this->_password($pass['pass']);
         }
         return ['wg' => 2];
@@ -89,13 +88,12 @@ class Auth extends lang\Lang {
     private function _timer()
     {
         if (file_exists($this->_data['path'] . 'hash.sz')) {
-            $this->_data['time'] = time();
             $this->_data['agent'] = filter_input(5, 'HTTP_USER_AGENT');
             $timer = unserialize(file_get_contents(DATA . 'panel' . D . 'auth.sz'))['timer'];
             $hash = unserialize(file_get_contents($this->_data['path'] . 'hash.sz'));
             if (
                     $this->_data['hash'] === $hash['hash'] and
-                    $this->_data['time'] - $timer < $hash['time'] and
+                    TS - $timer < $hash['time'] and
                     $this->_data['agent'] === $hash['agent']) {
                 return $this->_hash();
             }
@@ -110,10 +108,10 @@ class Auth extends lang\Lang {
         setcookie('hash', $hash, 0, '/');
         if (file_put_contents($this->_data['path'] . 'hash.sz', serialize([
                     'hash' => $hash,
-                    'time' => $this->_data['time'],
+                    'time' => TS,
                     'agent' => $this->_data['agent']
                 ]))) {
-            return unserialize(file_get_contents($this->_data['path'] . 'data.sz'));
+            return unserialize(file_get_contents($this->_data['path'] . 'data.sz'))['status'];
         }
         return ['wg' => 4];
     }
