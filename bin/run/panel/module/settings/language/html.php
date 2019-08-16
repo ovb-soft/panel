@@ -1,8 +1,8 @@
 <?php
 
 return '
-<form action="' . REQUEST . '" method="post" id="table">
-    <table>
+<form action="' . REQUEST . '" method="post">
+    <table id="table">
         <tr>
             <td class="solid block"><p>' . LE['multilang'] . '</p></td>
             <td class="solid"><p>:</p></td>

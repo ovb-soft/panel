@@ -13,9 +13,6 @@ table td{
     vertical-align: middle;
     text-align: left;
 }
-form p{
-    display: block;
-}
 html,
 body,
 button,
@@ -252,6 +249,13 @@ input:focus{
 }
 #table .solid{
     border-bottom: 1px solid rgb(207, 211, 221);
+}
+#table .date{
+    padding-right: 10px;
+    font-size: 13px;
+}
+#table .time{
+    font-size: 12px;
 }
 #table .button{
     margin-top: 1px;

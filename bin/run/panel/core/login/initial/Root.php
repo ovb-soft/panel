@@ -81,6 +81,8 @@ class Root extends \run\panel\core\lang\Lang {
             if (!empty($wg)) {
                 $this->_wg['wg_mail'] = str_replace('{ W }', $wg, HTML['wg']);
             }
+        } else {
+            $this->_wg['wg_mail'] = str_replace('{ W }', LE_TMP['wg_mail_enter'], HTML['wg']);
         }
         $this->_wg_user();
     }
@@ -109,6 +111,8 @@ class Root extends \run\panel\core\lang\Lang {
             if (empty($this->_wg['wg_user'])) {
                 $this->_wg_user_exists();
             }
+        } else {
+            $this->_wg['wg_user'] = str_replace('{ W }', LE_TMP['wg_user_enter'], HTML['wg']);
         }
         $this->_wg_pass();
     }
@@ -124,7 +128,12 @@ class Root extends \run\panel\core\lang\Lang {
     {
         if (!empty($this->_hl['pass'])) {
             if (!preg_match("'^[a-z0-9]{4,32}$'i", $this->_hl['pass'])) {
+                $this->_hl['pass'] = '';
                 $this->_wg['wg_pass'] = str_replace('{ W }', LE_TMP['wg_pass'], HTML['wg']);
+            }
+        } else {
+            if (!empty($this->_hl['mail']) and ! empty($this->_hl['user'])) {
+                $this->_wg['wg_pass'] = str_replace('{ W }', LE_TMP['wg_pass_enter'], HTML['wg']);
             }
         }
         $this->_wg_confirm();
@@ -134,7 +143,14 @@ class Root extends \run\panel\core\lang\Lang {
     {
         if (!empty($this->_hl['pass']) and ! empty($this->_hl['confirm'])) {
             if ($this->_hl['pass'] !== $this->_hl['confirm']) {
+                $this->_hl['confirm'] = '';
                 $this->_wg['wg_confirm'] = str_replace('{ W }', LE_TMP['wg_not_match'], HTML['wg']);
+            }
+        } elseif (!empty($this->_hl['pass']) and empty($this->_hl['confirm'])) {
+            if (!empty($this->_hl['mail']) and ! empty($this->_hl['user'])) {
+                $this->_wg['wg_confirm'] = str_replace(
+                        '{ W }', LE_TMP['wg_enter_confirm'], HTML['wg']
+                );
             }
         }
         $this->_wg_empty();

@@ -5,6 +5,7 @@
 #table .radio span:last-child{
     padding-right: 0;
 }
+#table select[name="lang"],
 #table select[name="block"],
 #table select[name="timer"]{
     width: 110px;

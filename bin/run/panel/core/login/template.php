@@ -31,12 +31,18 @@ echo '<!DOCTYPE html>
                 <p><span>&#187;</span>' . LE_TMP['route'] . '</p>
                 <div class="clear"></div>
             </div>
-<form action="' . REQUEST . '" method="post" id="block">
-    <p class="name">' . LE_TMP['mail'] . '</p>
-    <p class="input"><input type="text" name="mail" placeholder="' . LE_TMP['mail_ph'] . '" value="' . HL['mail'] . '"></p>
-    <p class="name">' . LE_TMP['pass'] . '</p>
-    <p class="input"><input type="password" name="pass" placeholder="' . LE_TMP['pass_ph'] . '" value="' . HL['pass'] . '"></p>' . HL['wg'] . '
-    <p class="button"><button id="button" type="submit" name="login">' . LT['sign_in-upp'] . '</button></p>
+<form action="' . REQUEST . '" method="post">
+    <div id="block">
+        <p class="name">' . LE_TMP['mail'] . '</p>
+        <p class="input">
+            <input type="text" name="mail" placeholder="' . LE_TMP['mail_ph'] . '" value="' . HL['mail'] . '">
+        </p>
+        <p class="name">' . LE_TMP['pass'] . '</p>
+        <p class="input">
+            <input type="password" name="pass" placeholder="' . LE_TMP['pass_ph'] . '" value="' . HL['pass'] . '">
+        </p>' . HL['wg'] . '
+        <p class="button"><button id="button" type="submit" name="login">' . LT['sign_in-upp'] . '</button></p>
+    </div>
 </form>
         </div>
     </body>

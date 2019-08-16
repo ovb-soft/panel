@@ -6,6 +6,7 @@ return [
             'personal' => 'Personal area'
         ],
         'le' => [
+            'created' => 'Registration date',
             'password' => 'Password',
             'change_password' => 'Change password'
         ]
@@ -15,6 +16,7 @@ return [
             'personal' => 'Личный кабинет'
         ],
         'le' => [
+            'created' => 'Дата регистрации',
             'password' => 'Пароль',
             'change_password' => 'Изменить пароль'
         ]

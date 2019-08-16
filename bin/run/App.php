@@ -5,7 +5,7 @@ namespace run;
 define('DATA', __DIR__ . D . 'data' . D);
 define('REQUEST', urldecode(filter_input(5, 'REQUEST_URI')));
 
-class App {
+class App extends \DateTime {
 
     private $_app;
     private $_ext;
@@ -13,7 +13,8 @@ class App {
 
     public function __construct()
     {
-        define('TS', (int) time());
+        parent::__construct();
+        define('TS', (int) parent::format('U'));
         file_exists(DATA) ? $this->_app() : new panel\core\login\initial\Data;
     }
 
