@@ -14,7 +14,7 @@ return [
             'wg_match' => 'Acceptable to use from 4 to 32 characters: A-Za-z0-9',
             'wg_old' => 'You entered your old password',
             'wg_not_match' => 'Passwords do not match',
-            'wg_empty_confirm' => 'Enter password confirmation',
+            'wg_enter_confirm' => 'Enter password confirmation',
             'save-upp' => 'SAVE'
         ]
     ],

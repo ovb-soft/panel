@@ -21,6 +21,7 @@ class App extends \DateTime {
     private function _app()
     {
         $this->_app = unserialize(file_get_contents(DATA . 'app.sz'));
+        define('TIMEZONE', $this->_app['timezone']);
         $this->_app['root'] ? $this->_branches() : new panel\core\login\initial\Root;
     }
 

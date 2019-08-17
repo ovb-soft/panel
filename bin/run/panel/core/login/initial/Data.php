@@ -18,7 +18,9 @@ class Data {
     {
         file_put_contents(DATA . 'app.sz', serialize([
             'root' => false,
-            'ext' => '.ww'
+            'ext' => '.ww',
+            'zone' => 'europe',
+            'timezone' => 'Europe/Moscow'
         ]));
         $this->_panel_langs();
     }

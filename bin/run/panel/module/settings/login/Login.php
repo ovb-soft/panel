@@ -16,7 +16,19 @@ class Login {
         ];
     }
 
-    public function _hl() {
+    private function _post()
+    {
+        $this->_auth['block'] = (int) filter_input(0, 'block');
+        $this->_auth['timer'] = (int) filter_input(0, 'timer');
+        if (file_put_contents(DATA . 'panel' . D . 'auth.sz', serialize($this->_auth)) === false) {
+            exit('Failed to write data to file.');
+        }
+        header('Location: /settings' . EXT);
+        exit;
+    }
+
+    private function _hl()
+    {
         $hl['block'] = '';
         foreach (LE['blocks'] as $k => $v) {
             $html = $k === $this->_auth['block'] ? 'option-selected' : 'option';
@@ -28,18 +40,6 @@ class Login {
             $hl['timer'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[$html]);
         }
         return $hl;
-    }
-
-    public function _post() {
-        $this->_auth['block'] = (int) filter_input(0, 'block');
-        $this->_auth['timer'] = (int) filter_input(0, 'timer');
-        file_put_contents(DATA . 'panel' . D . 'auth.sz', serialize($this->_auth));
-        $this->_header();
-    }
-
-    private function _header() {
-        header('Location: /settings' . EXT);
-        exit;
     }
 
 }

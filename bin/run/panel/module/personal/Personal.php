@@ -8,7 +8,7 @@ class Personal extends \DateTime {
 
     public function module()
     {
-        parent::setTimezone(new \DateTimeZone('-02:00'));
+        parent::setTimezone(new \DateTimeZone(TIMEZONE));
         $this->_dir = [
             'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
             'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
@@ -24,30 +24,22 @@ class Personal extends \DateTime {
         $data = $this->_pass = unserialize(file_get_contents(
                         $this->_dir['user'] . filter_input(2, 'user') . D . 'data.sz'
         ));
-        $date = $this->_hl_date($data['created']);
         return [
-            'date' => $date['date'],
-            'time' => $date['time']
+            'date' => $this->_hl_date($data['created'])
         ];
     }
 
     private function _hl_date($timestamp)
     {
-        parent::setTimezone(new \DateTimeZone('Europe/Moscow'));
         parent::setTimestamp($timestamp);
-        $ts = explode(' ', parent::format('d.m.Y H:i'));
-        $d = explode('.', $ts[0]);
-        $t = explode(':', $ts[1]);
+        $exp = explode(' ', parent::format('Y d m H i s'));
         return [
-            'date' => [
-                'day' => $d[0],
-                'month' => $d[1],
-                'year' => $d[2]
-            ],
-            'time' => [
-                'hour' => $t[0],
-                'minute' => $t[1]
-            ]
+            'year' => $exp[0],
+            'day' => $exp[1],
+            'month' => $exp[2],
+            'hour' => $exp[3],
+            'minute' => $exp[4],
+            'second' => $exp[5]
         ];
     }
 

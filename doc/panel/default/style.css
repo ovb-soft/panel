@@ -247,6 +247,15 @@ input:focus{
     padding-left: 10px;
     padding-right: 10px;
 }
+#table .line-left{
+    padding-left: 10px;
+}
+#table .line-right{
+    padding-right: 10px;
+}
+#table .input{
+    padding: 7px 10px;
+}
 #table .solid{
     border-bottom: 1px solid rgb(207, 211, 221);
 }
@@ -262,7 +271,7 @@ input:focus{
     padding: 20px 10px 30px 10px;
     border-top: 1px solid rgb(207, 211, 221);
 }
-#table .footer{
+#table div.footer{
     margin-top: 1px;
     height: 30px;
     border-top: 1px solid rgb(207, 211, 221);

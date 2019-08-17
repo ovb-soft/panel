@@ -7,7 +7,8 @@ return [
         ],
         'le' => [
             'language' => 'Language settings',
-            'login' => 'Login and session settings'
+            'login' => 'Login and session settings',
+            'timezone' => 'Time zone setting'
         ]
     ],
     'ru' => [
@@ -16,7 +17,8 @@ return [
         ],
         'le' => [
             'language' => 'Языковые настройки',
-            'login' => 'Настройки входа и сессии'
+            'login' => 'Настройки входа и сессии',
+            'timezone' => 'Настройка часового пояса'
         ]
     ]
 ];

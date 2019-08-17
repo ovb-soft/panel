@@ -1,7 +1,7 @@
 <?php
 
 $DATE = HL['date']['day'] . '<b>.</b>' . HL['date']['month'] . '<b>.</b>' . HL['date']['year'];
-$TIME = HL['time']['hour'] . '<b>:</b>' . HL['time']['minute'];
+$TIME = HL['date']['hour'] . '<b>:</b>' . HL['date']['minute'];
 
 return '
 <table id="table">
@@ -16,6 +16,6 @@ return '
         <td class="solid line"><p><a href="/personal/password' . EXT . '">' . LE['change_password'] . '</a></p></td>
     </tr>
     <tr>
-        <td colspan="3"><p class="footer"></p></td>
+        <td colspan="3"><div class="footer"></div></td>
     </tr>
 </table>';

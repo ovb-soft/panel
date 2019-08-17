@@ -106,12 +106,9 @@ class Password {
     private function _save()
     {
         $this->_pass['pass'] = password_hash($this->_hl['new_pass'], PASSWORD_DEFAULT);
-        file_put_contents($this->_dir['mail'] . 'pass.sz', serialize($this->_pass));
-        $this->_header();
-    }
-
-    private function _header()
-    {
+        if (file_put_contents($this->_dir['mail'] . 'pass.sz', serialize($this->_pass)) === false) {
+            exit('Failed to write data to file.');
+        }
         header('Location: /personal' . EXT);
         exit;
     }

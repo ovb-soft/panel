@@ -16,6 +16,19 @@ class Language {
         ];
     }
 
+    private function _post()
+    {
+        $this->_lang['multilang'] = (bool) filter_input(0, 'multilang');
+        $lang = filter_input(0, 'lang');
+        $this->_lang['lang'] = isset($this->_lang['langs'][$lang]) ? $lang : $this->_lang['lang'];
+        if (file_put_contents(DATA . 'panel' . D . 'lang.sz', serialize($this->_lang)) === false) {
+            exit('Failed to write data to file.');
+        }
+        !$this->_lang['multilang'] ?: setcookie('lang', '', 0, '/');
+        header('Location: /settings' . EXT);
+        exit;
+    }
+
     private function _hl()
     {
         $hl['yes'] = $this->_lang['multilang'] ? '' : ' checked';
@@ -26,22 +39,6 @@ class Language {
             $hl['lang'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[$html]);
         }
         return $hl;
-    }
-
-    private function _post()
-    {
-        $this->_lang['multilang'] = (bool) filter_input(0, 'multilang');
-        $lang = filter_input(0, 'lang');
-        $this->_lang['lang'] = isset($this->_lang['langs'][$lang]) ? $lang : $this->_lang['lang'];
-        file_put_contents(DATA . 'panel' . D . 'lang.sz', serialize($this->_lang));
-        !$this->_lang['multilang'] ?: setcookie('lang', '', 0, '/');
-        $this->_header();
-    }
-
-    private function _header()
-    {
-        header('Location: /settings' . EXT);
-        exit;
     }
 
 }
