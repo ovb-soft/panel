@@ -7,7 +7,7 @@ class Main {
     public function module()
     {
         return [
-            'content' => require 'html.php'
+            'content' => MENU
         ];
     }
 

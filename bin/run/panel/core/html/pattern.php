@@ -21,5 +21,14 @@ return [
                 <p><span>&#187;</span><span class="red">{ T }</span></p>',
         'a' => '
                 <p><span>&#187;</span><a href="{ H }' . EXT . '">{ A }</a></p>'
+    ],
+    'menu' => [
+        'ul' => '
+            <ul id="menu">[L]
+            </ul>',
+        'li' => '
+                <li><a href="/[H]' . EXT . '">[A]</a></li>',
+        'li-blank' => '
+                <li><a href="/[H]' . EXT . '" target="_blank">[A]</a></li>'
     ]
 ];

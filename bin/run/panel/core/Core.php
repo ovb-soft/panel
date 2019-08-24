@@ -3,17 +3,19 @@
 namespace run\panel\core;
 
 define('CORE', __DIR__ . D);
+define('HTML', require 'html' . D . 'pattern.php');
 
 class Core extends Auth {
 
+    use traits\Core;
+
     protected $res;
-    private $_lp;
+    private $_path;
 
     protected function core()
     {
         parent::auth();
         $this->_core_lang();
-        define('HTML', require 'html' . D . 'pattern.php');
         define('HEAD', $this->_const_head());
         define('LOGO', $this->_const_logo());
         define('ERROR', $this->_const_error());
@@ -32,38 +34,20 @@ class Core extends Auth {
         $langs = MODULE . str_replace('/', D, PATH['path']) . D . 'langs.php';
         if (file_exists($langs)) {
             $lang = (require $langs)[LANG];
-            !isset($lang['path']) ?: define('LP', $lang['path']);
+            !isset($lang['path']) ?: $this->_path = $lang['path'];
             !isset($lang['le']) ?: define('LE', $lang['le']);
+            !isset($lang['menu']) ?: define('MENU', $this->_const_menu($lang['menu']));
         }
-    }
-
-    private function _const_head()
-    {
-        return file_exists(DOC . 'panel' . D . 'default' . D . PATH['exp'][0] . '.css') ?
-                HTML['css'] : '';
-    }
-
-    private function _const_logo()
-    {
-        return PATH['path'] === 'main' ? HTML['logo'] : HTML['a-logo'];
-    }
-
-    private function _const_error()
-    {
-        return (PATH['error'] or ! file_exists(
-                        MODULE . str_replace('/', D, PATH['path']) . D . PATH['class'] . '.php'
-        ));
     }
 
     private function _const_title()
     {
-        $this->_lp = defined('LP');
         $title = '';
         if (ERROR) {
             $title = ' | ' . LT['404']['title'];
-        } elseif ($this->_lp) {
+        } elseif ($this->_path) {
             foreach (PATH['exp'] as $v) {
-                $title .= ' » ' . LP[$v];
+                $title .= ' » ' . $this->_path[$v];
             }
             !isset($this->res['title']) ?: $title .= ' » ' . $this->res['title'];
         }
@@ -73,25 +57,32 @@ class Core extends Auth {
     private function _const_route()
     {
         $route = '';
-        if ($this->_lp) {
+        if ($this->_path) {
             for ($i = 0, $c = count(PATH['exp']), $routes = '', $path = ''; $i < $c; $i++) {
                 if ($i === $c - 1) {
-                    $routes .= str_replace('{ T }', LP[PATH['exp'][$i]], HTML['route']['p']);
+                    $routes .= str_replace(
+                            '{ T }', $this->_path[PATH['exp'][$i]], HTML['route']['p']
+                    );
                     break;
                 }
                 $search = ['{ H }', '{ A }'];
                 $path .= '/' . PATH['exp'][$i];
-                $replace = [$path, LP[PATH['exp'][$i]]];
+                $replace = [$path, $this->_path[PATH['exp'][$i]]];
                 $routes .= str_replace($search, $replace, HTML['route']['a']);
             }
-            if (isset($this->res['route'])) {
-                $routes .= isset($this->res['route']['red']) ?
-                        str_replace('{ T }', $this->res['route']['red'], HTML['route']['p-red']) :
-                        str_replace('{ T }', $this->res['route'], HTML['route']['p']);
-            }
-            $route = str_replace('{ R }', $routes, HTML['route']['div']);
+            $route = $this->_const_routes($routes);
         }
         return $route;
+    }
+
+    private function _const_routes($routes)
+    {
+        if (isset($this->res['route'])) {
+            $routes .= isset($this->res['route']['red']) ?
+                    str_replace('{ T }', $this->res['route']['red'], HTML['route']['p-red']) :
+                    str_replace('{ T }', $this->res['route'], HTML['route']['p']);
+        }
+        return str_replace('{ R }', $routes, HTML['route']['div']);
     }
 
 }

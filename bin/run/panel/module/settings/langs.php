@@ -5,20 +5,20 @@ return [
         'path' => [
             'settings' => 'Settings'
         ],
-        'le' => [
-            'language' => 'Language settings',
-            'login' => 'Login and session settings',
-            'timezone' => 'Time zone setting'
+        'menu' => [
+            'settings/language' => 'Language settings',
+            'settings/login' => 'Login and session settings',
+            'settings/timezone' => 'Time zone setting'
         ]
     ],
     'ru' => [
         'path' => [
             'settings' => 'Настройки'
         ],
-        'le' => [
-            'language' => 'Языковые настройки',
-            'login' => 'Настройки входа и сессии',
-            'timezone' => 'Настройка часового пояса'
+        'menu' => [
+            'settings/language' => 'Языковые настройки',
+            'settings/login' => 'Настройки входа и сессии',
+            'settings/timezone' => 'Настройка часового пояса'
         ]
     ]
 ];

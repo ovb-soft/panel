@@ -1,8 +1,8 @@
 <?php
 
-namespace run\panel\module\settings;
+namespace run\panel\module\users;
 
-class Settings {
+class Users {
 
     public function module()
     {

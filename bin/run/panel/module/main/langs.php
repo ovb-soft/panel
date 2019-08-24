@@ -2,15 +2,17 @@
 
 return [
     'en' => [
-        'le' => [
+        'menu' => [
             'settings' => 'Settings',
-            'personal' => 'Personal area'
+            'personal' => 'Personal area',
+            'users' => 'Users'
         ]
     ],
     'ru' => [
-        'le' => [
+        'menu' => [
             'settings' => 'Настройки',
-            'personal' => 'Личный кабинет'
+            'personal' => 'Личный кабинет',
+            'users' => 'Пользователи'
         ]
     ]
 ];
