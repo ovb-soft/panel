@@ -35,8 +35,9 @@ class Language {
         $hl['no'] = $this->_lang['multilang'] ? ' checked' : '';
         $hl['lang'] = '';
         foreach ($this->_lang['langs'] as $k => $v) {
-            $html = $k === $this->_lang['lang'] ? 'option-selected' : 'option';
-            $hl['lang'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[$html]);
+            $hl['lang'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[
+                    $k === $this->_lang['lang'] ? 'option-selected' : 'option'
+            ]);
         }
         return $hl;
     }

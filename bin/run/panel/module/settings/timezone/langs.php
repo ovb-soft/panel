@@ -7,7 +7,7 @@ return [
             'timezone' => 'Time zone setting'
         ],
         'le' => [
-            'timezone' => 'Time zone',
+            'time' => 'Time zone',
             'change' => 'Change'
         ]
     ],
@@ -17,7 +17,7 @@ return [
             'timezone' => 'Настройка часового пояса'
         ],
         'le' => [
-            'timezone' => 'Часовой пояс',
+            'time' => 'Часовой пояс',
             'change' => 'Изменить'
         ]
     ]

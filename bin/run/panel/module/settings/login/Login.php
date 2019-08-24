@@ -31,13 +31,15 @@ class Login {
     {
         $hl['block'] = '';
         foreach (LE['blocks'] as $k => $v) {
-            $html = $k === $this->_auth['block'] ? 'option-selected' : 'option';
-            $hl['block'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[$html]);
+            $hl['block'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[
+                    $k === $this->_auth['block'] ? 'option-selected' : 'option'
+            ]);
         }
         $hl['timer'] = '';
         foreach (LE['timers'] as $k => $v) {
-            $html = $k === $this->_auth['timer'] ? 'option-selected' : 'option';
-            $hl['timer'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[$html]);
+            $hl['timer'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[
+                    $k === $this->_auth['timer'] ? 'option-selected' : 'option'
+            ]);
         }
         return $hl;
     }

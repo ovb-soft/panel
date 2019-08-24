@@ -8,7 +8,7 @@ class Personal extends \DateTime {
 
     public function module()
     {
-        parent::setTimezone(new \DateTimeZone(TIMEZONE));
+        parent::setTimezone(new \DateTimeZone(TIME_ZONE));
         $this->_dir = [
             'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
             'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
@@ -21,17 +21,16 @@ class Personal extends \DateTime {
 
     private function _hl()
     {
-        $data = $this->_pass = unserialize(file_get_contents(
-                        $this->_dir['user'] . filter_input(2, 'user') . D . 'data.sz'
-        ));
         return [
-            'date' => $this->_hl_date($data['created'])
+            'created' => $this->_hl_date(unserialize(file_get_contents(
+                                    $this->_dir['user'] . filter_input(2, 'user') . D . 'data.sz'
+            ))['created'])
         ];
     }
 
-    private function _hl_date($timestamp)
+    private function _hl_date($created)
     {
-        parent::setTimestamp($timestamp);
+        parent::setTimestamp($created);
         $exp = explode(' ', parent::format('Y d m H i s'));
         return [
             'year' => $exp[0],

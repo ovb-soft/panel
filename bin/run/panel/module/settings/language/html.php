@@ -5,7 +5,7 @@ return '
     <table id="table">
         <tr>
             <td class="solid block"><p>' . LE['multilang'] . '</p></td>
-            <td class="solid"><p>:</p></td>
+            <td class="solid bold"><p>:</p></td>
             <td class="solid line">
                 <p class="radio">
                     <input type="radio" name="multilang" value="0"' . HL['yes'] . '><span>' . LE['yes'] . '</span>
@@ -15,7 +15,7 @@ return '
         </tr>
         <tr>
             <td class="solid block"><p>' . LE['lang'] . '</p></td>
-            <td class="solid"><p>:</p></td>
+            <td class="solid bold"><p>:</p></td>
             <td class="solid line"><p><select name="lang" size="1">' . HL['lang'] . '</select></p></td>
         </tr>
         <tr>

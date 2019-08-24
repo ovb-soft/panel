@@ -52,10 +52,10 @@ class Auth extends lang\Lang {
     {
         $pass = unserialize(file_get_contents($this->_dir['mail'] . 'pass.sz'));
         $time = $pass['time'];
-        $pass['time'] = TS;
+        $pass['time'] = TIMESTAMP;
         file_put_contents($this->_dir['mail'] . 'pass.sz', serialize($pass));
         $block = unserialize(file_get_contents(DATA . 'panel' . D . 'auth.sz'))['block'];
-        if (TS - $block > $time) {
+        if (TIMESTAMP - $block > $time) {
             return $this->_password($pass['pass']);
         }
         return ['wg' => 2];
@@ -93,7 +93,7 @@ class Auth extends lang\Lang {
             $hash = unserialize(file_get_contents($this->_data['path'] . 'hash.sz'));
             if (
                     $this->_data['hash'] === $hash['hash'] and
-                    TS - $timer < $hash['time'] and
+                    TIMESTAMP - $timer < $hash['time'] and
                     $this->_data['agent'] === $hash['agent']) {
                 return $this->_hash();
             }
@@ -108,7 +108,7 @@ class Auth extends lang\Lang {
         setcookie('hash', $hash, 0, '/');
         if (file_put_contents($this->_data['path'] . 'hash.sz', serialize([
                     'hash' => $hash,
-                    'time' => TS,
+                    'time' => TIMESTAMP,
                     'agent' => $this->_data['agent']
                 ]))) {
             return unserialize(file_get_contents($this->_data['path'] . 'data.sz'))['status'];

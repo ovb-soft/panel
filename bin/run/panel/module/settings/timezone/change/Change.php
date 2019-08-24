@@ -5,70 +5,71 @@ namespace run\panel\module\settings\timezone\change;
 class Change {
 
     private $_app;
-    private $_zone;
+    private $_region;
 
     public function module()
     {
         $this->_app = unserialize(file_get_contents(DATA . 'app.sz'));
         return [
-            'content' => filter_has_var(0, 'post') ? $this->_post() : $this->_zone()
+            'content' => filter_has_var(0, 'post') ? $this->_post() : $this->_region()
         ];
     }
 
     private function _post()
     {
-        $this->_zone = filter_input(0, 'zone');
-        if (isset(LE['zone'][$this->_zone])) {
-            if (filter_has_var(0, 'timezone')) {
+        $this->_region = filter_input(0, 'region');
+        if (isset(LE['region'][$this->_region])) {
+            if (filter_has_var(0, 'time_zone')) {
                 $this->_app();
             } else {
-                return $this->_timezone();
+                return $this->_time_zone();
             }
         } else {
-            header('Location: /settings/timezone/change' . EXT);
-            exit;
+            exit('Is no such zone.');
         }
     }
 
     private function _app()
     {
-        $timezone = filter_input(0, 'timezone');
-        if (in_array($timezone, require $this->_zone . '.php')) {
-            $this->_app['zone'] = $this->_zone;
-            $this->_app['timezone'] = $timezone;
+        $time = filter_input(0, 'time_zone');
+        if (in_array($time, require $this->_region . '.php')) {
+            $this->_app['region'] = $this->_region;
+            $this->_app['time_zone'] = $time;
             if (file_put_contents(DATA . 'app.sz', serialize($this->_app)) === false) {
                 exit('Failed to write data to file.');
             }
+            header('Location: /settings/timezone' . EXT);
+            exit;
+        } else {
+            exit('Is no such time zone.');
         }
-        header('Location: /settings/timezone' . EXT);
-        exit;
     }
 
-    private function _timezone()
+    private function _time_zone()
     {
         $hl = [
-            'zone' => $this->_zone,
-            'timezone' => ''
+            'region' => $this->_region,
+            'time_zone' => ''
         ];
-        foreach (require $this->_zone . '.php' as $v) {
-            $hl['timezone'] .= str_replace(['{ V }', '{ O }'], [$v, $v], HTML[
-                    $v === $this->_app['timezone'] ? 'option-selected' : 'option'
+        foreach (require $this->_region . '.php' as $v) {
+            $hl['time_zone'] .= str_replace(['{ V }', '{ O }'], [$v, $v], HTML[
+                    $v === $this->_app['time_zone'] ? 'option-selected' : 'option'
             ]);
         }
         define('HL', $hl);
-        return require 'html' . D . 'timezone.php';
+        return require 'html_time_zone.php';
     }
 
-    private function _zone()
+    private function _region()
     {
-        $hl['zone'] = '';
-        foreach (LE['zone'] as $k => $v) {
-            $hl['zone'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[
-                    $k === $this->_app['zone'] ? 'option-selected' : 'option'
+        $hl['region'] = '';
+        foreach (LE['region'] as $k => $v) {
+            $hl['region'] .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[
+                    $k === $this->_app['region'] ? 'option-selected' : 'option'
             ]);
         }
         define('HL', $hl);
-        return require 'html' . D . 'zone.php';
+        return require 'html_region.php';
     }
 
 }

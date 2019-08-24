@@ -8,9 +8,9 @@ return [
             'change' => 'Change'
         ],
         'le' => [
-            'choose_zone' => 'Choose a zone',
+            'choose_zone' => 'Choose region',
             'choose_time' => 'Choose time zone',
-            'zone' => [
+            'region' => [
                 'asia' => 'Asia',
                 'europe' => 'Europe'
             ],
@@ -25,9 +25,9 @@ return [
             'change' => 'Изменить'
         ],
         'le' => [
-            'choose_zone' => 'Выберите зону',
+            'choose_zone' => 'Выберите регион',
             'choose_time' => 'Выберите часовой пояс',
-            'zone' => [
+            'region' => [
                 'asia' => 'Азия',
                 'europe' => 'Европа'
             ],

@@ -184,7 +184,7 @@ class Root extends \run\panel\core\lang\Lang {
     {
         file_put_contents($this->_dir['mail'] . 'pass.sz', serialize([
             'pass' => password_hash($this->_hl['pass'], PASSWORD_DEFAULT),
-            'time' => TS
+            'time' => TIMESTAMP
         ]));
         file_put_contents($this->_dir['mail'] . 'user.sz', serialize([
             'user' => $this->_hl['user'],
@@ -197,13 +197,13 @@ class Root extends \run\panel\core\lang\Lang {
     {
         $hash = $this->hash(32);
         file_put_contents($this->_dir['user'] . 'data.sz', serialize([
-            'created' => TS,
+            'created' => TIMESTAMP,
             'mail' => $this->_hl['mail'],
             'status' => 'root'
         ]));
         file_put_contents($this->_dir['user'] . 'hash.sz', serialize([
             'hash' => $hash,
-            'time' => TS,
+            'time' => TIMESTAMP,
             'agent' => filter_input(5, 'HTTP_USER_AGENT')
         ]));
         setcookie('user', $this->_hl['user'], 0, '/');

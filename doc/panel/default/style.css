@@ -276,6 +276,9 @@ input:focus{
     height: 30px;
     border-top: 1px solid rgb(207, 211, 221);
 }
+#table .bold{
+    font-weight: bold;
+}
 /* -- end #table -- */
 
 /* -- #block -- */
