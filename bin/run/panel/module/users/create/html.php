@@ -2,6 +2,13 @@
 
 return '
 <form action="' . REQUEST . '" method="post">
+    <table id="table">
+        <tr>
+            <td class="solid line"><p><select name="status" size="1">' . STATUS . '</select></p></td>
+            <td class="solid bold"><p>:</p></td>
+            <td class="solid block"><p>' . LE['status'] . '</p></td>
+        </tr>
+    </table>
     <div id="block">
         <p class="name">' . LE['mail'] . '</p>
         <p class="input">

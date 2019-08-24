@@ -5,6 +5,8 @@ namespace run\panel\module\users\create;
 class Create {
 
     private $_dir;
+    private $_post;
+    private $_status;
     private $_hl = [
         'mail' => '',
         'user' => '',
@@ -25,21 +27,37 @@ class Create {
             'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
             'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
         ];
-        !filter_has_var(0, 'post') ?: $this->_post();
+        $this->_post = filter_has_var(0, 'post');
+        define('STATUS', $this->_status());
+        !$this->_post ?: $this->_post();
         define('HL', $this->_hl + $this->_wg);
         return [
             'content' => require 'html.php'
         ];
     }
 
+    private function _status()
+    {
+        $this->_status = $this->_post ? filter_input(0, 'status') : 'user';
+        if (isset(LE['statuses'][$this->_status])) {
+            $status = '';
+            foreach (LE['statuses'] as $k => $v) {
+                $status .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[
+                        $k === $this->_status ? 'option-selected' : 'option'
+                ]);
+            }
+            return $status;
+        } else {
+            exit('User status not found');
+        }
+    }
+
     private function _post()
     {
-        $this->_hl = [
-            'mail' => trim(filter_input(0, 'mail')),
-            'user' => $this->_cut_double_space(trim(filter_input(0, 'user'))),
-            'pass' => trim(filter_input(0, 'pass')),
-            'confirm' => trim(filter_input(0, 'confirm'))
-        ];
+        $this->_hl['mail'] = trim(filter_input(0, 'mail'));
+        $this->_hl['user'] = $this->_cut_double_space(trim(filter_input(0, 'user')));
+        $this->_hl['pass'] = trim(filter_input(0, 'pass'));
+        $this->_hl['confirm'] = trim(filter_input(0, 'confirm'));
         $this->_empty();
     }
 
@@ -169,24 +187,33 @@ class Create {
 
     private function _save_mail()
     {
-        file_put_contents($this->_dir['mail'] . 'pass.sz', serialize([
-            'pass' => password_hash($this->_hl['pass'], PASSWORD_DEFAULT),
-            'time' => TIMESTAMP
-        ]));
-        file_put_contents($this->_dir['mail'] . 'user.sz', serialize([
-            'user' => $this->_hl['user'],
-            'path' => $this->_dir['user']
-        ]));
+        if (
+                file_put_contents($this->_dir['mail'] . 'pass.sz', serialize([
+                    'pass' => password_hash($this->_hl['pass'], PASSWORD_DEFAULT),
+                    'time' => TIMESTAMP
+                ])) === false) {
+            exit('Failed to write data to file.');
+        }
+        if (
+                file_put_contents($this->_dir['mail'] . 'user.sz', serialize([
+                    'user' => $this->_hl['user'],
+                    'path' => $this->_dir['user']
+                ])) === false) {
+            exit('Failed to write data to file.');
+        }
         $this->_save_user();
     }
 
     private function _save_user()
     {
-        file_put_contents($this->_dir['user'] . 'data.sz', serialize([
-            'created' => TIMESTAMP,
-            'mail' => $this->_hl['mail'],
-            'status' => 'user'
-        ]));
+        if (
+                file_put_contents($this->_dir['user'] . 'data.sz', serialize([
+                    'created' => TIMESTAMP,
+                    'mail' => $this->_hl['mail'],
+                    'status' => $this->_status
+                ])) === false) {
+            exit('Failed to write data to file.');
+        };
         $this->_header();
     }
 

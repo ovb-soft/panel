@@ -7,6 +7,11 @@ return [
             'create' => 'Create user'
         ],
         'le' => [
+            'status' => 'user status',
+            'statuses' => [
+                'editor' => 'Editor',
+                'user' => 'User'
+            ],
             'mail' => 'Email address',
             'mail_ph' => 'Enter email address',
             'user' => 'Login',
@@ -36,6 +41,11 @@ return [
             'create' => 'Создать пользователя'
         ],
         'le' => [
+            'status' => 'статус пользователя',
+            'statuses' => [
+                'editor' => 'Редактор',
+                'user' => 'Пользователь'
+            ],
             'mail' => 'Адрес эл. почты',
             'mail_ph' => 'Введите адрес эл. почты',
             'user' => 'Логин',
