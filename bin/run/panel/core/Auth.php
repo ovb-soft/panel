@@ -4,7 +4,7 @@ namespace run\panel\core;
 
 class Auth extends lang\Lang {
 
-    use \run\uses\Hash;
+    use \traits\Hash;
 
     private $_dir;
     private $_data;

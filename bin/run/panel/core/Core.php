@@ -16,9 +16,9 @@ class Core extends Auth {
     {
         parent::auth();
         $this->_core_lang();
-        define('HEAD', $this->_const_head());
-        define('LOGO', $this->_const_logo());
-        define('ERROR', $this->_const_error());
+        define('HEAD', $this->const_head());
+        define('LOGO', $this->const_logo());
+        define('ERROR', $this->const_error());
     }
 
     protected function echo()
@@ -36,7 +36,7 @@ class Core extends Auth {
             $lang = (require $langs)[LANG];
             !isset($lang['path']) ?: $this->_path = $lang['path'];
             !isset($lang['le']) ?: define('LE', $lang['le']);
-            !isset($lang['menu']) ?: define('MENU', $this->_const_menu($lang['menu']));
+            !isset($lang['menu']) ?: define('MENU', $this->const_menu($lang['menu']));
         }
     }
 

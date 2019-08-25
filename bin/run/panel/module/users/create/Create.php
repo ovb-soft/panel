@@ -23,7 +23,6 @@ class Create {
     public function module()
     {
         $this->_dir = [
-            'auth' => DATA . 'panel' . D . 'auth' . D,
             'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
             'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
         ];
@@ -54,11 +53,13 @@ class Create {
 
     private function _post()
     {
-        $this->_hl['mail'] = trim(filter_input(0, 'mail'));
-        $this->_hl['user'] = $this->_cut_double_space(trim(filter_input(0, 'user')));
-        $this->_hl['pass'] = trim(filter_input(0, 'pass'));
-        $this->_hl['confirm'] = trim(filter_input(0, 'confirm'));
-        $this->_empty();
+        $this->_hl = [
+            'mail' => trim(filter_input(0, 'mail')),
+            'user' => $this->_cut_double_space(trim(filter_input(0, 'user'))),
+            'pass' => trim(filter_input(0, 'pass')),
+            'confirm' => trim(filter_input(0, 'confirm'))
+        ];
+        $this->_hl_empty();
     }
 
     private function _cut_double_space($data)
@@ -66,7 +67,7 @@ class Create {
         return preg_replace('/ +/', ' ', $data);
     }
 
-    private function _empty()
+    private function _hl_empty()
     {
         $hl = true;
         foreach ($this->_hl as $v) {
@@ -160,10 +161,10 @@ class Create {
                 );
             }
         }
-        $this->_wg_empty();
+        $this->_empty();
     }
 
-    private function _wg_empty()
+    private function _empty()
     {
         $hl = true;
         foreach ($this->_hl as $v) {
@@ -213,7 +214,7 @@ class Create {
                     'status' => $this->_status
                 ])) === false) {
             exit('Failed to write data to file.');
-        };
+        }
         $this->_header();
     }
 

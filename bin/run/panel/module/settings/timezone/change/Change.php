@@ -38,11 +38,16 @@ class Change {
             if (file_put_contents(DATA . 'app.sz', serialize($this->_app)) === false) {
                 exit('Failed to write data to file.');
             }
-            header('Location: /settings/timezone' . EXT);
-            exit;
+            $this->_header();
         } else {
             exit('Is no such time zone.');
         }
+    }
+
+    private function _header()
+    {
+        header('Location: /settings' . EXT);
+        exit;
     }
 
     private function _time_zone()

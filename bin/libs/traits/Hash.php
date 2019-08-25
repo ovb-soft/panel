@@ -1,6 +1,6 @@
 <?php
 
-namespace run\uses;
+namespace traits;
 
 trait Hash {
 

@@ -25,6 +25,11 @@ class Language {
             exit('Failed to write data to file.');
         }
         !$this->_lang['multilang'] ?: setcookie('lang', '', 0, '/');
+        $this->_header();
+    }
+
+    private function _header()
+    {
         header('Location: /settings' . EXT);
         exit;
     }

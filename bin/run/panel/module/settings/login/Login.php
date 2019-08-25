@@ -23,6 +23,11 @@ class Login {
         if (file_put_contents(DATA . 'panel' . D . 'auth.sz', serialize($this->_auth)) === false) {
             exit('Failed to write data to file.');
         }
+        $this->_header();
+    }
+
+    private function _header()
+    {
         header('Location: /settings' . EXT);
         exit;
     }

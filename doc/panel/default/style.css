@@ -184,13 +184,13 @@ input:focus{
 
 /* -- #route -- */
 #route{
-    padding-top: 12px;
+    padding-top: 14px;
     border-bottom: 3px double rgb(207, 211, 221);
 }
 #route p{
     display: block;
     float: left;
-    padding: 0 8px 8px 0;
+    padding: 0 8px 10px 0;
 }
 #route p span{
     position: relative;
@@ -241,7 +241,7 @@ input:focus{
 
 /* -- #table -- */
 #table .block{
-    padding: 10px;
+    padding: 9px 10px;
 }
 #table .line{
     padding-left: 10px;
@@ -254,7 +254,7 @@ input:focus{
     padding-right: 10px;
 }
 #table .input{
-    padding: 7px 10px;
+    padding: 6px 10px;
 }
 #table .solid{
     border-bottom: 1px solid rgb(207, 211, 221);
@@ -278,6 +278,13 @@ input:focus{
 }
 #table .bold{
     font-weight: bold;
+}
+#table .double{
+    display: block;
+    margin-top: 1px;
+    padding: 10px 10px 20px 10px;
+    border-top: 1px solid rgb(207, 211, 221);
+    border-bottom: 3px double rgb(207, 211, 221);
 }
 /* -- end #table -- */
 

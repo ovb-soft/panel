@@ -2,13 +2,12 @@
 
 namespace run\panel\module\personal;
 
-class Personal extends \DateTime {
+class Personal {
 
     private $_dir;
 
     public function module()
     {
-        parent::setTimezone(new \DateTimeZone(TIME_ZONE));
         $this->_dir = [
             'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
             'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
@@ -21,17 +20,20 @@ class Personal extends \DateTime {
 
     private function _hl()
     {
+        $user = filter_input(2, 'user');
+        $data = unserialize(file_get_contents($this->_dir['user'] . $user . D . 'data.sz'));
         return [
-            'created' => $this->_hl_date(unserialize(file_get_contents(
-                                    $this->_dir['user'] . filter_input(2, 'user') . D . 'data.sz'
-            ))['created'])
+            'mail' => $data['mail'],
+            'user' => str_replace('^', ' ', $user),
+            'created' => $this->_created($data['created'])
         ];
     }
 
-    private function _hl_date($created)
+    private function _created($created)
     {
-        parent::setTimestamp($created);
-        $exp = explode(' ', parent::format('Y d m H i s'));
+        $date = new \DateTime(null, new \DateTimeZone(TIME_ZONE));
+        $date->setTimestamp($created);
+        $exp = explode(' ', $date->format('Y d m H i s'));
         return [
             'year' => $exp[0],
             'day' => $exp[1],

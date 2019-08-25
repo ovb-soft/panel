@@ -16,6 +16,7 @@ echo '<!DOCTYPE html>
             <div class="container">
                 <div class="left">' . LOGO . '</div>
                 <div class="right"><a href="/logout' . EXT . '"><i class="icon-logout"></i>' . LT['sign_out-upp'] . '</a></div>' . LANGS . '
+                <div class="right"><a href="/personal' . EXT . '"><i class="icon-dot-3"></i><i class="icon-user"></i></a></div>
                 <div class="clear"></div>
             </div>
         </div>

@@ -4,25 +4,25 @@ namespace run\panel\core\traits;
 
 trait Core {
 
-    private function _const_head()
+    private function const_head()
     {
         return file_exists(DOC . 'panel' . D . 'default' . D . PATH['exp'][0] . '.css') ?
                 HTML['css'] : '';
     }
 
-    private function _const_logo()
+    private function const_logo()
     {
         return PATH['path'] === 'main' ? HTML['logo'] : HTML['a-logo'];
     }
 
-    private function _const_error()
+    private function const_error()
     {
         return (PATH['error'] or ! file_exists(
                         MODULE . str_replace('/', D, PATH['path']) . D . PATH['class'] . '.php'
         ));
     }
 
-    private function _const_menu($menu)
+    private function const_menu($menu)
     {
         $blank = [];
         if (isset($menu['blank'])) {
