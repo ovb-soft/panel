@@ -1,14 +1,21 @@
 <?php
 
-namespace run\panel\core\login\initial;
+namespace initial;
 
-define('CORE', dirname(__DIR__, 2) . D);
+define('USER', [
+    'auth' => DATA . 'panel' . D . 'auth' . D,
+    'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
+    'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
+]);
+define('HTML', require 'pattern.php');
 
-class Root extends \run\panel\core\lang\Lang {
+new \run\panel\core\lang\Lang;
 
-    use Functions;
+class Root extends \run\panel\core\corp\users\Users {
 
-    private $_dir;
+    use Functions,
+        \traits\Hash;
+
     private $_hl = [
         'mail' => '',
         'user' => '',
@@ -24,37 +31,26 @@ class Root extends \run\panel\core\lang\Lang {
 
     public function __construct()
     {
-        parent::lang();
-        $this->_dir = [
-            'auth' => DATA . 'panel' . D . 'auth' . D,
-            'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
-            'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
-        ];
+        parent::users();
         REQUEST === '/' ?: $this->slash();
         define('LE', (require 'langs.php')[LANG]);
-        define('HTML', require 'pattern.php');
-        define('HL', $this->_hl());
+        !$this->post ?: $this->_post();
+        define('HL', $this->_hl + $this->_wg);
         require 'template.php';
     }
 
-    private function _hl()
+    private function _post()
     {
-        !filter_has_var(0, 'post') ?: $this->_hl = [
-                    'mail' => trim(filter_input(0, 'mail')),
-                    'user' => $this->_double_space_cut(trim(filter_input(0, 'user'))),
-                    'pass' => trim(filter_input(0, 'pass')),
-                    'confirm' => trim(filter_input(0, 'confirm'))
+        $this->_hl = [
+            'mail' => $this->post['mail'],
+            'user' => $this->post['user'],
+            'pass' => $this->post['pass'],
+            'confirm' => $this->post['confirm']
         ];
-        $this->_empty();
-        return $this->_hl + $this->_wg;
+        $this->_hl_empty();
     }
 
-    private function _double_space_cut($data)
-    {
-        return preg_replace('/ +/', ' ', $data);
-    }
-
-    private function _empty()
+    private function _hl_empty()
     {
         $hl = true;
         foreach ($this->_hl as $v) {
@@ -72,51 +68,35 @@ class Root extends \run\panel\core\lang\Lang {
             }
             !empty($wg) ?: $wg .= $this->_wg_mail_emptyh();
             !empty($wg) ?: $wg .= $this->_wg_mail_length();
-            !empty($wg) ?: $wg .= $this->_wg_mail_exists();
             if (!empty($wg)) {
                 $this->_wg['wg_mail'] = str_replace('{ W }', $wg, HTML['wg']);
             }
         } else {
-            $this->_wg['wg_mail'] = str_replace('{ W }', LE['wg_mail_enter'], HTML['wg']);
+            $this->_wg['wg_mail'] = str_replace('{ W }', WG['wg_mail_enter'], HTML['wg']);
         }
         $this->_wg_user();
     }
 
     private function _wg_mail_emptyh()
     {
-        return strpos($this->_hl['mail'], ' ') ? LE['wg_mail_emptyh'] : '';
+        return strpos($this->_hl['mail'], ' ') ? WG['wg_mail_emptyh'] : '';
     }
 
     private function _wg_mail_length()
     {
-        return strlen($this->_hl['mail']) > 255 ? LE['wg_mail_length'] : '';
-    }
-
-    private function _wg_mail_exists()
-    {
-        return file_exists($this->_dir['mail'] . $this->_hl['mail']) ? LE['wg_mail_exists'] : '';
+        return strlen($this->_hl['mail']) > 255 ? WG['wg_mail_length'] : '';
     }
 
     private function _wg_user()
     {
         if (!empty($this->_hl['user'])) {
             if (!preg_match("'^[a-z0-9\-_ ]{2,32}$'i", $this->_hl['user'])) {
-                $this->_wg['wg_user'] = str_replace('{ W }', LE['wg_user'], HTML['wg']);
-            }
-            if (empty($this->_wg['wg_user'])) {
-                $this->_wg_user_exists();
+                $this->_wg['wg_user'] = str_replace('{ W }', WG['wg_user'], HTML['wg']);
             }
         } else {
-            $this->_wg['wg_user'] = str_replace('{ W }', LE['wg_user_enter'], HTML['wg']);
+            $this->_wg['wg_user'] = str_replace('{ W }', WG['wg_user_enter'], HTML['wg']);
         }
         $this->_wg_pass();
-    }
-
-    private function _wg_user_exists()
-    {
-        if (file_exists($this->_dir['user'] . $this->_hl['user'])) {
-            $this->_wg['wg_user'] = str_replace('{ W }', LE['wg_user_exists'], HTML['wg']);
-        }
     }
 
     private function _wg_pass()
@@ -124,11 +104,11 @@ class Root extends \run\panel\core\lang\Lang {
         if (!empty($this->_hl['pass'])) {
             if (!preg_match("'^[a-z0-9]{4,32}$'i", $this->_hl['pass'])) {
                 $this->_hl['pass'] = '';
-                $this->_wg['wg_pass'] = str_replace('{ W }', LE['wg_pass'], HTML['wg']);
+                $this->_wg['wg_pass'] = str_replace('{ W }', WG['wg_pass'], HTML['wg']);
             }
         } else {
             if (!empty($this->_hl['mail']) and ! empty($this->_hl['user'])) {
-                $this->_wg['wg_pass'] = str_replace('{ W }', LE['wg_pass_enter'], HTML['wg']);
+                $this->_wg['wg_pass'] = str_replace('{ W }', WG['wg_pass_enter'], HTML['wg']);
             }
         }
         $this->_wg_confirm();
@@ -139,19 +119,21 @@ class Root extends \run\panel\core\lang\Lang {
         if (!empty($this->_hl['pass']) and ! empty($this->_hl['confirm'])) {
             if ($this->_hl['pass'] !== $this->_hl['confirm']) {
                 $this->_hl['confirm'] = '';
-                $this->_wg['wg_confirm'] = str_replace('{ W }', LE['wg_not_match'], HTML['wg']);
+                $this->_wg['wg_confirm'] = str_replace(
+                        '{ W }', WG['wg_pass_not_match'], HTML['wg']
+                );
             }
         } elseif (!empty($this->_hl['pass']) and empty($this->_hl['confirm'])) {
             if (!empty($this->_hl['mail']) and ! empty($this->_hl['user'])) {
                 $this->_wg['wg_confirm'] = str_replace(
-                        '{ W }', LE['wg_enter_confirm'], HTML['wg']
+                        '{ W }', WG['wg_pass_enter_confirm'], HTML['wg']
                 );
             }
         }
-        $this->_wg_empty();
+        $this->_empty();
     }
 
-    private function _wg_empty()
+    private function _empty()
     {
         $hl = true;
         foreach ($this->_hl as $v) {
@@ -166,26 +148,26 @@ class Root extends \run\panel\core\lang\Lang {
 
     private function _save_dir()
     {
-        $this->_hl['user'] = str_replace(' ', '+', $this->_hl['user']);
-        file_exists($this->_dir['auth']) ?: mkdir($this->_dir['auth']);
-        file_exists($this->_dir['mail']) ?: mkdir($this->_dir['mail']);
-        file_exists($this->_dir['user']) ?: mkdir($this->_dir['user']);
-        $this->_dir['mail'] .= $this->_hl['mail'] . D;
-        $this->_dir['user'] .= $this->_hl['user'] . D;
-        file_exists($this->_dir['mail']) ?: mkdir($this->_dir['mail']);
-        file_exists($this->_dir['user']) ?: mkdir($this->_dir['user']);
+        $this->_hl['user'] = str_replace(' ', '^', $this->_hl['user']);
+        file_exists($this->dir['auth']) ?: mkdir($this->dir['auth']);
+        file_exists($this->dir['mail']) ?: mkdir($this->dir['mail']);
+        file_exists($this->dir['user']) ?: mkdir($this->dir['user']);
+        $this->dir['mail'] .= $this->_hl['mail'] . D;
+        $this->dir['user'] .= $this->_hl['user'] . D;
+        file_exists($this->dir['mail']) ?: mkdir($this->dir['mail']);
+        file_exists($this->dir['user']) ?: mkdir($this->dir['user']);
         $this->_save_mail();
     }
 
     private function _save_mail()
     {
-        file_put_contents($this->_dir['mail'] . 'pass.sz', serialize([
+        file_put_contents($this->dir['mail'] . 'pass.sz', serialize([
             'pass' => password_hash($this->_hl['pass'], PASSWORD_DEFAULT),
             'time' => TIMESTAMP
         ]));
-        file_put_contents($this->_dir['mail'] . 'user.sz', serialize([
+        file_put_contents($this->dir['mail'] . 'user.sz', serialize([
             'user' => $this->_hl['user'],
-            'path' => $this->_dir['user']
+            'path' => $this->dir['user']
         ]));
         $this->_save_user();
     }
@@ -193,12 +175,12 @@ class Root extends \run\panel\core\lang\Lang {
     private function _save_user()
     {
         $hash = $this->hash(32);
-        file_put_contents($this->_dir['user'] . 'data.sz', serialize([
+        file_put_contents($this->dir['user'] . 'data.sz', serialize([
             'created' => TIMESTAMP,
             'mail' => $this->_hl['mail'],
-            'status' => 'root'
+            'access' => 'root'
         ]));
-        file_put_contents($this->_dir['user'] . 'hash.sz', serialize([
+        file_put_contents($this->dir['user'] . 'hash.sz', serialize([
             'hash' => $hash,
             'time' => TIMESTAMP,
             'agent' => filter_input(5, 'HTTP_USER_AGENT')
@@ -213,7 +195,8 @@ class Root extends \run\panel\core\lang\Lang {
         $app = unserialize(file_get_contents(DATA . 'app.sz'));
         $app['root'] = $this->_hl['user'];
         file_put_contents(DATA . 'app.sz', serialize($app));
-        $this->header($app['ext']);
+        $this->ext = $app['ext'];
+        $this->header();
     }
 
 }

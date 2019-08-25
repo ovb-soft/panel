@@ -15,14 +15,14 @@ class App extends \DateTime {
     {
         parent::__construct();
         define('TIMESTAMP', (int) parent::format('U'));
-        file_exists(DATA) ? $this->_app() : new panel\core\login\initial\Data;
+        file_exists(DATA) ? $this->_app() : new \initial\Data;
     }
 
     private function _app()
     {
         $this->_app = unserialize(file_get_contents(DATA . 'app.sz'));
         define('TIME_ZONE', $this->_app['time_zone']);
-        $this->_app['root'] ? $this->_branches() : new panel\core\login\initial\Root;
+        $this->_app['root'] ? $this->_branches() : new \initial\Root;
     }
 
     private function _branches()

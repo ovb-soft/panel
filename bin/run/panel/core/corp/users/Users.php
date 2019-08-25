@@ -2,6 +2,8 @@
 
 namespace run\panel\core\corp\users;
 
+define('WG', (require 'langs.php')[LANG]);
+
 class Users {
 
     protected $dir;
@@ -9,17 +11,12 @@ class Users {
     protected $mail;
     protected $post;
 
-    public function users()
+    protected function users()
     {
-        $this->dir = [
-            'auth' => DATA . 'panel' . D . 'auth' . D,
-            'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
-            'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
-        ];
+        $this->dir = USER;
         $this->user = false;
         $this->mail = false;
         $this->post = false;
-        define('WG', (require 'langs.php')[LANG]);
         !filter_has_var(2, 'user') ?: $this->_users_user();
         !filter_has_var(0, 'post') ?: $this->_users_post();
     }

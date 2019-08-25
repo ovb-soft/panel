@@ -2,13 +2,18 @@
 
 namespace run\panel;
 
+define('USER', [
+    'auth' => DATA . 'panel' . D . 'auth' . D,
+    'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
+    'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
+]);
 define('MODULE', __DIR__ . D . 'module' . D);
 
 class Panel extends core\Core {
 
     public function __construct()
     {
-        parent::core();
+        parent::__construct();
         PATH['path'] === 'logout' ? $this->_logout() : $this->_login();
     }
 

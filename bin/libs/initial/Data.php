@@ -1,6 +1,6 @@
 <?php
 
-namespace run\panel\core\login\initial;
+namespace initial;
 
 class Data {
 

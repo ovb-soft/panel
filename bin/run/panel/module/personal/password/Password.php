@@ -64,7 +64,7 @@ class Password extends \run\panel\core\corp\users\Users {
 
     private function _pass_match()
     {
-        $this->_wg['wg_pass'] = str_replace('{ W }', WG['wg_pass_match'], HTML['wg']);
+        $this->_wg['wg_pass'] = str_replace('{ W }', WG['wg_pass'], HTML['wg']);
         $this->_hl();
     }
 

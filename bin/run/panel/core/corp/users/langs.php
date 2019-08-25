@@ -10,7 +10,8 @@ return [
         'wg_user' => 'Allowed to use from 2 to 32 characters: A-Za-z0-9, hyphen, underline and space.',
         'wg_user_enter' => 'Enter login.',
         'wg_user_exists' => 'This login already exists.',
-        'wg_pass_match' => 'Acceptable to use from 4 to 32 characters: A-Za-z0-9.',
+        'wg_pass' => 'Acceptable to use from 4 to 32 characters: A-Za-z0-9.',
+        'wg_pass_enter' => 'Enter password.',
         'wg_pass_old' => 'You entered your old password.',
         'wg_pass_not_match' => 'Passwords do not match.',
         'wg_pass_enter_confirm' => 'Enter password confirmation.'
@@ -24,7 +25,8 @@ return [
         'wg_user' => 'Вы можете использовать от 2 до 32 символов: A-Za-z0-9, дефис, подчеркивание и пробел.',
         'wg_user_enter' => 'Введите логин.',
         'wg_user_exists' => 'Такой логин уже существует.',
-        'wg_pass_match' => 'Допустимо использовать от 4 до 32 символов: A-Za-z0-9.',
+        'wg_pass' => 'Допустимо использовать от 4 до 32 символов: A-Za-z0-9.',
+        'wg_pass_enter' => 'Введите пароль.',
         'wg_pass_old' => 'Вы ввели свой старый пароль.',
         'wg_pass_not_match' => 'Пароли не совпадают.',
         'wg_pass_enter_confirm' => 'Введите подтверждение пароля.'

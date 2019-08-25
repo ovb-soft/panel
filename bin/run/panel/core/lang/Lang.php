@@ -4,7 +4,7 @@ namespace run\panel\core\lang;
 
 class Lang {
 
-    protected function lang()
+    public function __construct()
     {
         define('LANG', $this->_const_lang());
         define('LT', (require 'langs.php')[LANG]);
@@ -33,7 +33,6 @@ class Lang {
 
     private function _const_langs()
     {
-        $html = require CORE . 'html' . D . 'lang.php';
         if ($this->_lang['multilang']) {
             return '';
         }
@@ -41,16 +40,16 @@ class Lang {
         foreach ($this->_lang['langs'] as $k => $v) {
             if ($k !== LANG) {
                 $button .= str_replace(
-                        ['{ V }', '{ L }', '{ B }'], [$k, $k, $v], $html['button']
+                        ['{ V }', '{ L }', '{ B }'], [$k, $k, $v], HTML['langs']['button']
                 );
             }
         }
         $search = ['{ L }', '{ B }'];
-        $replace = [$this->_lang['langs'][LANG], $this->_const_langs_hidden($html) . $button];
-        return str_replace($search, $replace, $html['div']);
+        $replace = [$this->_lang['langs'][LANG], $this->_const_langs_hidden() . $button];
+        return str_replace($search, $replace, HTML['langs']['div']);
     }
 
-    private function _const_langs_hidden($html)
+    private function _const_langs_hidden()
     {
         $hidden = '';
         $post = filter_input_array(0);
@@ -60,8 +59,8 @@ class Lang {
                     continue;
                 }
                 $hidden .= ($k === 'login' or $k === 'post') ?
-                        str_replace('{ N }', $k, $html['hidden']) :
-                        str_replace(['{ N }', '{ V }'], [$k, $v], $html['hidden-value']);
+                        str_replace('{ N }', $k, HTML['langs']['hidden']) :
+                        str_replace(['{ N }', '{ V }'], [$k, $v], HTML['langs']['hidden-value']);
             }
         }
         return $hidden;

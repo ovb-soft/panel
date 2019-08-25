@@ -41,8 +41,8 @@ class Edit extends \run\panel\core\corp\users\Users {
     {
         (
                 $this->_hl['mail'] === $this->mail and
-                $this->_hl['user'] === $this->user
-                ) ?: $this->_hl_empty();
+                str_replace(' ', '^', $this->_hl['user']) === $this->user
+                ) ? $this->_header() : $this->_hl_empty();
     }
 
     private function _hl_empty()

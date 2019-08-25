@@ -2,20 +2,15 @@
 
 namespace run\panel\core;
 
-class Auth extends lang\Lang {
+class Auth {
 
     use \traits\Hash;
 
     private $_dir;
     private $_data;
 
-    protected function auth()
+    public function __construct()
     {
-        parent::lang();
-        $this->_dir = [
-            'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
-            'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
-        ];
         $auth = ['wg' => false];
         if (filter_has_var(0, 'login')) {
             $auth = $this->_post();
@@ -34,7 +29,7 @@ class Auth extends lang\Lang {
         $mail = trim(filter_input(0, 'mail'));
         $this->_data['pass'] = trim(filter_input(0, 'pass'));
         if ($mail and $this->_data['pass']) {
-            $this->_dir['mail'] .= $mail . D;
+            $this->_dir['mail'] = USER['mail'] . $mail . D;
             return $this->_exists();
         }
         return ['wg' => false];
@@ -79,7 +74,7 @@ class Auth extends lang\Lang {
         $this->_data['user'] = filter_input(2, 'user');
         $this->_data['hash'] = filter_input(2, 'hash');
         if ($this->_data['user'] and $this->_data['hash']) {
-            $this->_data['path'] = $this->_dir['user'] . $this->_data['user'] . D;
+            $this->_data['path'] = USER['user'] . $this->_data['user'] . D;
             return $this->_timer();
         }
         return ['wg' => 5];
@@ -111,7 +106,7 @@ class Auth extends lang\Lang {
                     'time' => TIMESTAMP,
                     'agent' => $this->_data['agent']
                 ]))) {
-            return unserialize(file_get_contents($this->_data['path'] . 'data.sz'))['status'];
+            return unserialize(file_get_contents($this->_data['path'] . 'data.sz'))['access'];
         }
         return ['wg' => 4];
     }

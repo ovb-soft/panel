@@ -2,16 +2,11 @@
 
 namespace run\panel\module\personal;
 
-class Personal {
-
-    private $_dir;
+class Personal extends \run\panel\core\corp\users\Users {
 
     public function module()
     {
-        $this->_dir = [
-            'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
-            'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
-        ];
+        parent::users();
         define('HL', $this->_hl());
         return [
             'content' => require 'html.php'
@@ -20,12 +15,12 @@ class Personal {
 
     private function _hl()
     {
-        $user = filter_input(2, 'user');
-        $data = unserialize(file_get_contents($this->_dir['user'] . $user . D . 'data.sz'));
         return [
-            'mail' => $data['mail'],
-            'user' => str_replace('^', ' ', $user),
-            'created' => $this->_created($data['created'])
+            'mail' => $this->mail,
+            'user' => str_replace('^', ' ', $this->user),
+            'created' => $this->_created(unserialize(file_get_contents(
+                                    $this->dir['user'] . $this->user . D . 'data.sz'
+                    ))['created'])
         ];
     }
 
