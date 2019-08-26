@@ -7,7 +7,7 @@ define('USER', [
     'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
     'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
 ]);
-define('MODULE', __DIR__ . D . 'module' . D);
+define('MODULES', __DIR__ . D . 'modules' . D);
 
 class Panel extends core\Core {
 
@@ -37,15 +37,17 @@ class Panel extends core\Core {
 
     private function _error_code($code)
     {
-        $this->res['content'] = str_replace('{ E }', LT[$code]['content'], HTML['id-error']);
+        define('MODULE', [
+            'content' => str_replace('{ E }', LT[$code]['content'], HTML['id-error'])
+        ]);
     }
 
     private function _module()
     {
-        $run = '\\run\\panel\\module\\' .
+        $module = '\\run\\panel\\modules\\' .
                 str_replace('/', '\\', PATH['path']) . '\\' .
                 PATH['class'];
-        $this->res = (new $run)->module();
+        new $module;
     }
 
 }

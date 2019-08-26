@@ -1,18 +1,18 @@
 <?php
 
-namespace run\panel\module\settings\timezone\change;
+namespace run\panel\modules\settings\timezone\change;
 
 class Change {
 
     private $_app;
     private $_region;
 
-    public function module()
+    public function __construct()
     {
         $this->_app = unserialize(file_get_contents(DATA . 'app.sz'));
-        return [
+        define('MODULE', [
             'content' => filter_has_var(0, 'post') ? $this->_post() : $this->_region()
-        ];
+        ]);
     }
 
     private function _post()

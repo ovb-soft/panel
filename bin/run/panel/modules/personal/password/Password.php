@@ -1,42 +1,33 @@
 <?php
 
-namespace run\panel\module\personal\password;
+namespace run\panel\modules\personal\password;
 
-class Password extends \run\panel\core\corp\users\Users {
+class Password extends Save {
 
-    private $_hl = [
+    protected $hl = [
         'pass' => '',
         'confirm' => ''
     ];
-    private $_pass;
+    protected $pass;
     private $_wg = [
         'wg_pass' => '',
         'wg_confirm' => ''
     ];
 
-    public function module()
+    public function __construct()
     {
-        parent::users();
-        !$this->post ?: $this->_post();
-        define('HL', $this->_hl + $this->_wg);
-        return [
+        parent::__construct();
+        !$this->post ?: $this->_hl_empty($this->hl = $this->post);
+        define('HL', $this->hl + $this->_wg);
+        define('MODULE', [
             'content' => require 'html.php'
-        ];
-    }
-
-    private function _post()
-    {
-        $this->_hl = [
-            'pass' => $this->post['pass'],
-            'confirm' => $this->post['confirm']
-        ];
-        $this->_hl_empty();
+        ]);
     }
 
     private function _hl_empty()
     {
         $hl = true;
-        foreach ($this->_hl as $v) {
+        foreach ($this->hl as $v) {
             empty($v) ?: $hl = false;
         }
         $hl ?: $this->_pass();
@@ -44,16 +35,16 @@ class Password extends \run\panel\core\corp\users\Users {
 
     private function _pass()
     {
-        if ($this->_hl['pass']) {
+        if ($this->hl['pass']) {
             $this->dir['mail'] .= unserialize(file_get_contents(
                                     $this->dir['user'] . $this->user . D . 'data.sz'
                     ))['mail'] . D;
-            $this->_pass = unserialize(file_get_contents($this->dir['mail'] . 'pass.sz'));
-            if (!preg_match("'^[a-z0-9]{4,32}$'i", $this->_hl['pass'])) {
+            $this->pass = unserialize(file_get_contents($this->dir['mail'] . 'pass.sz'));
+            if (!preg_match("'^[a-z0-9]{4,32}$'i", $this->hl['pass'])) {
                 $this->_pass_match();
-            } elseif (password_verify($this->_hl['pass'], $this->_pass['pass'])) {
+            } elseif (password_verify($this->hl['pass'], $this->pass['pass'])) {
                 $this->_pass_verify();
-            } elseif ($this->_hl['pass'] !== $this->_hl['confirm']) {
+            } elseif ($this->hl['pass'] !== $this->hl['confirm']) {
                 $this->_pass_confirm();
             }
             $this->_wg_empty();
@@ -76,8 +67,8 @@ class Password extends \run\panel\core\corp\users\Users {
 
     private function _pass_confirm()
     {
-        if ($this->_hl['confirm']) {
-            $this->_hl['confirm'] = '';
+        if ($this->hl['confirm']) {
+            $this->hl['confirm'] = '';
             $this->_wg['wg_confirm'] = str_replace('{ W }', WG['wg_pass_not_match'], HTML['wg']);
         } else {
             $this->_wg['wg_confirm'] = str_replace(
@@ -88,7 +79,7 @@ class Password extends \run\panel\core\corp\users\Users {
 
     private function _hl()
     {
-        $this->_hl = [
+        $this->hl = [
             'pass' => '',
             'confirm' => ''
         ];
@@ -100,22 +91,7 @@ class Password extends \run\panel\core\corp\users\Users {
         foreach ($this->_wg as $v) {
             empty($v) ?: $wg = true;
         }
-        $wg ?: $this->_save();
-    }
-
-    private function _save()
-    {
-        $this->_pass['pass'] = password_hash($this->_hl['pass'], PASSWORD_DEFAULT);
-        if (file_put_contents($this->dir['mail'] . 'pass.sz', serialize($this->_pass)) === false) {
-            exit('Failed to write data to file.');
-        }
-        $this->_header();
-    }
-
-    private function _header()
-    {
-        header('Location: /personal' . EXT);
-        exit;
+        $wg ?: $this->save();
     }
 
 }

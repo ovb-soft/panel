@@ -11,7 +11,7 @@ class Users {
     protected $mail;
     protected $post;
 
-    protected function users()
+    public function __construct()
     {
         $this->dir = USER;
         $this->user = false;

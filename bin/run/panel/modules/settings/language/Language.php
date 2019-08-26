@@ -1,19 +1,19 @@
 <?php
 
-namespace run\panel\module\settings\language;
+namespace run\panel\modules\settings\language;
 
 class Language {
 
     private $_lang;
 
-    public function module()
+    public function __construct()
     {
         $this->_lang = unserialize(file_get_contents(DATA . 'panel' . D . 'lang.sz'));
         !filter_has_var(0, 'post') ?: $this->_post();
         define('HL', $this->_hl());
-        return [
+        define('MODULE', [
             'content' => require 'html.php'
-        ];
+        ]);
     }
 
     private function _post()

@@ -6,13 +6,9 @@ class Save extends \run\panel\core\corp\users\Users {
 
     use \traits\Hash;
 
-    protected $tmp;
-
     public function __construct()
     {
-        parent::users();
-        $this->tmp = false;
-        !$this->post ?: $this->tmp = $this->post;
+        parent::__construct();
     }
 
     protected function save()

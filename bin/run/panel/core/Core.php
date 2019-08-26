@@ -11,8 +11,6 @@ class Core {
 
     use traits\Core;
 
-    protected $res;
-
     public function __construct()
     {
         $this->_core_lang();
@@ -23,19 +21,15 @@ class Core {
 
     protected function echo()
     {
-        define('TITLE', $this->const_title(
-                        isset($this->res['title']) ? $this->res['title'] : false
-        ));
-        define('ROUTE', $this->const_route(
-                        isset($this->res['route']) ? $this->res['route'] : false
-        ));
-        define('CONTENT', $this->res['content']);
+        define('TITLE', $this->const_title());
+        define('ROUTE', $this->const_route());
+        define('CONTENT', MODULE['content']);
         require 'html' . D . 'template.php';
     }
 
     private function _core_lang()
     {
-        $langs = MODULE . str_replace('/', D, PATH['path']) . D . 'langs.php';
+        $langs = MODULES . str_replace('/', D, PATH['path']) . D . 'langs.php';
         if (file_exists($langs)) {
             $lang = (require $langs)[LANG];
             !isset($lang['path']) ?: $this->path = $lang['path'];

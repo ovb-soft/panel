@@ -1,19 +1,19 @@
 <?php
 
-namespace run\panel\module\settings\login;
+namespace run\panel\modules\settings\login;
 
 class Login {
 
     private $_auth;
 
-    public function module()
+    public function __construct()
     {
         $this->_auth = unserialize(file_get_contents(DATA . 'panel' . D . 'auth.sz'));
         !filter_has_var(0, 'post') ?: $this->_post();
         define('HL', $this->_hl());
-        return [
+        define('MODULE', [
             'content' => require 'html.php'
-        ];
+        ]);
     }
 
     private function _post()

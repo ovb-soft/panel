@@ -37,11 +37,11 @@ trait Core {
     private function const_error()
     {
         return (PATH['error'] or ! file_exists(
-                        MODULE . str_replace('/', D, PATH['path']) . D . PATH['class'] . '.php'
+                        MODULES . str_replace('/', D, PATH['path']) . D . PATH['class'] . '.php'
         ));
     }
 
-    private function const_title($append)
+    private function const_title()
     {
         $title = '';
         if (ERROR) {
@@ -50,12 +50,12 @@ trait Core {
             foreach (PATH['exp'] as $v) {
                 $title .= ' » ' . $this->path[$v];
             }
-            !$append ?: $title .= ' » ' . $append;
+            !isset(MODULE['title']) ?: $title .= ' » ' . MODULE['title'];
         }
         return $title;
     }
 
-    private function const_route($append)
+    private function const_route()
     {
         $route = '';
         if ($this->path) {
@@ -71,17 +71,17 @@ trait Core {
                 $replace = [$path, $this->path[PATH['exp'][$i]]];
                 $routes .= str_replace($search, $replace, HTML['route']['a']);
             }
-            $route = $this->_const_route_append($routes, $append);
+            $route = $this->_const_route_append($routes);
         }
         return $route;
     }
 
-    private function _const_route_append($routes, $append)
+    private function _const_route_append($routes)
     {
-        if ($append) {
-            $routes .= isset($append['route']['red']) ?
-                    str_replace('{ T }', $append['route']['red'], HTML['route']['p-red']) :
-                    str_replace('{ T }', $append['route'], HTML['route']['p']);
+        if (isset(MODULE['route'])) {
+            $routes .= isset(MODULE['route']['red']) ?
+                    str_replace('{ T }', MODULE['route']['red'], HTML['route']['p-red']) :
+                    str_replace('{ T }', MODULE['route'], HTML['route']['p']);
         }
         return str_replace('{ R }', $routes, HTML['route']['div']);
     }

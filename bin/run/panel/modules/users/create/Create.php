@@ -1,24 +1,17 @@
 <?php
 
-namespace initial;
+namespace run\panel\modules\users\create;
 
-define('USER', [
-    'auth' => DATA . 'panel' . D . 'auth' . D,
-    'mail' => DATA . 'panel' . D . 'auth' . D . 'mail' . D,
-    'user' => DATA . 'panel' . D . 'auth' . D . 'user' . D
-]);
-define('HTML', require 'pattern.php');
+class Create extends Save {
 
-new \run\panel\core\lang\Lang;
-
-class Root extends Save {
-
+    protected $access;
     protected $hl = [
         'mail' => '',
         'user' => '',
         'pass' => '',
         'confirm' => ''
     ];
+    private $_access;
     private $_wg = [
         'wg_mail' => '',
         'wg_user' => '',
@@ -29,17 +22,29 @@ class Root extends Save {
     public function __construct()
     {
         parent::__construct();
-        REQUEST === '/' ?: $this->slash();
-        define('LE', (require 'langs.php')[LANG]);
+        $this->_access();
         !$this->post ?: $this->_hl_empty($this->hl = $this->post);
+        $this->hl['access'] = $this->_access;
         define('HL', $this->hl + $this->_wg);
-        require 'template.php';
+        define('MODULE', [
+            'content' => require 'html.php'
+        ]);
     }
 
-    private function slash()
+    private function _access()
     {
-        header('Location: /');
-        exit;
+        $this->access = $this->post ? filter_input(0, 'access') : 'user';
+        if (isset(LE['access'][$this->access])) {
+            $access = '';
+            foreach (LE['access'] as $k => $v) {
+                $access .= str_replace(['{ V }', '{ O }'], [$k, $v], HTML[
+                        $k === $this->access ? 'option-selected' : 'option'
+                ]);
+            }
+            $this->_access = $access;
+        } else {
+            exit('User access not found');
+        }
     }
 
     private function _hl_empty()
@@ -56,10 +61,11 @@ class Root extends Save {
         if (!empty($this->hl['mail'])) {
             $wg = '';
             if (!preg_match("'.+@.+\..+'i", $this->hl['mail'])) {
-                $wg = LE['wg_mail'];
+                $wg = WG['wg_mail'];
             }
             !empty($wg) ?: $wg .= $this->_wg_mail_emptyh();
             !empty($wg) ?: $wg .= $this->_wg_mail_length();
+            !empty($wg) ?: $wg .= $this->_wg_mail_exists();
             if (!empty($wg)) {
                 $this->_wg['wg_mail'] = str_replace('{ W }', $wg, HTML['wg']);
             }
@@ -79,16 +85,31 @@ class Root extends Save {
         return strlen($this->hl['mail']) > 255 ? WG['wg_mail_length'] : '';
     }
 
+    private function _wg_mail_exists()
+    {
+        return file_exists($this->dir['mail'] . $this->hl['mail']) ? WG['wg_mail_exists'] : '';
+    }
+
     private function _wg_user()
     {
         if (!empty($this->hl['user'])) {
             if (!preg_match("'^[a-z0-9\-_ ]{2,32}$'i", $this->hl['user'])) {
                 $this->_wg['wg_user'] = str_replace('{ W }', WG['wg_user'], HTML['wg']);
             }
+            if (empty($this->_wg['wg_user'])) {
+                $this->_wg_user_exists();
+            }
         } else {
             $this->_wg['wg_user'] = str_replace('{ W }', WG['wg_user_enter'], HTML['wg']);
         }
         $this->_wg_pass();
+    }
+
+    private function _wg_user_exists()
+    {
+        if (file_exists($this->dir['user'] . $this->hl['user'])) {
+            $this->_wg['wg_user'] = str_replace('{ W }', WG['wg_user_exists'], HTML['wg']);
+        }
     }
 
     private function _wg_pass()

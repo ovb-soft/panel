@@ -1,16 +1,16 @@
 <?php
 
-namespace run\panel\module\personal;
+namespace run\panel\modules\personal;
 
 class Personal extends \run\panel\core\corp\users\Users {
 
-    public function module()
+    public function __construct()
     {
-        parent::users();
+        parent::__construct();
         define('HL', $this->_hl());
-        return [
+        define('MODULE', [
             'content' => require 'html.php'
-        ];
+        ]);
     }
 
     private function _hl()
