@@ -11,12 +11,9 @@ define('HTML', require 'pattern.php');
 
 new \run\panel\core\lang\Lang;
 
-class Root extends \run\panel\core\corp\users\Users {
+class Root extends Save {
 
-    use Functions,
-        \traits\Hash;
-
-    private $_hl = [
+    protected $hl = [
         'mail' => '',
         'user' => '',
         'pass' => '',
@@ -31,29 +28,24 @@ class Root extends \run\panel\core\corp\users\Users {
 
     public function __construct()
     {
-        parent::users();
+        parent::__construct();
         REQUEST === '/' ?: $this->slash();
         define('LE', (require 'langs.php')[LANG]);
-        !$this->post ?: $this->_post();
-        define('HL', $this->_hl + $this->_wg);
+        !$this->tmp ?: $this->_hl_empty($this->hl = $this->tmp);
+        define('HL', $this->hl + $this->_wg);
         require 'template.php';
     }
 
-    private function _post()
+    private function slash()
     {
-        $this->_hl = [
-            'mail' => $this->post['mail'],
-            'user' => $this->post['user'],
-            'pass' => $this->post['pass'],
-            'confirm' => $this->post['confirm']
-        ];
-        $this->_hl_empty();
+        header('Location: /');
+        exit;
     }
 
     private function _hl_empty()
     {
         $hl = true;
-        foreach ($this->_hl as $v) {
+        foreach ($this->hl as $v) {
             empty($v) ?: $hl = false;
         }
         $hl ?: $this->_wg_mail();
@@ -61,9 +53,9 @@ class Root extends \run\panel\core\corp\users\Users {
 
     private function _wg_mail()
     {
-        if (!empty($this->_hl['mail'])) {
+        if (!empty($this->hl['mail'])) {
             $wg = '';
-            if (!preg_match("'.+@.+\..+'i", $this->_hl['mail'])) {
+            if (!preg_match("'.+@.+\..+'i", $this->hl['mail'])) {
                 $wg = LE['wg_mail'];
             }
             !empty($wg) ?: $wg .= $this->_wg_mail_emptyh();
@@ -79,18 +71,18 @@ class Root extends \run\panel\core\corp\users\Users {
 
     private function _wg_mail_emptyh()
     {
-        return strpos($this->_hl['mail'], ' ') ? WG['wg_mail_emptyh'] : '';
+        return strpos($this->hl['mail'], ' ') ? WG['wg_mail_emptyh'] : '';
     }
 
     private function _wg_mail_length()
     {
-        return strlen($this->_hl['mail']) > 255 ? WG['wg_mail_length'] : '';
+        return strlen($this->hl['mail']) > 255 ? WG['wg_mail_length'] : '';
     }
 
     private function _wg_user()
     {
-        if (!empty($this->_hl['user'])) {
-            if (!preg_match("'^[a-z0-9\-_ ]{2,32}$'i", $this->_hl['user'])) {
+        if (!empty($this->hl['user'])) {
+            if (!preg_match("'^[a-z0-9\-_ ]{2,32}$'i", $this->hl['user'])) {
                 $this->_wg['wg_user'] = str_replace('{ W }', WG['wg_user'], HTML['wg']);
             }
         } else {
@@ -101,13 +93,13 @@ class Root extends \run\panel\core\corp\users\Users {
 
     private function _wg_pass()
     {
-        if (!empty($this->_hl['pass'])) {
-            if (!preg_match("'^[a-z0-9]{4,32}$'i", $this->_hl['pass'])) {
-                $this->_hl['pass'] = '';
+        if (!empty($this->hl['pass'])) {
+            if (!preg_match("'^[a-z0-9]{4,32}$'i", $this->hl['pass'])) {
+                $this->hl['pass'] = '';
                 $this->_wg['wg_pass'] = str_replace('{ W }', WG['wg_pass'], HTML['wg']);
             }
         } else {
-            if (!empty($this->_hl['mail']) and ! empty($this->_hl['user'])) {
+            if (!empty($this->hl['mail']) and ! empty($this->hl['user'])) {
                 $this->_wg['wg_pass'] = str_replace('{ W }', WG['wg_pass_enter'], HTML['wg']);
             }
         }
@@ -116,15 +108,15 @@ class Root extends \run\panel\core\corp\users\Users {
 
     private function _wg_confirm()
     {
-        if (!empty($this->_hl['pass']) and ! empty($this->_hl['confirm'])) {
-            if ($this->_hl['pass'] !== $this->_hl['confirm']) {
-                $this->_hl['confirm'] = '';
+        if (!empty($this->hl['pass']) and ! empty($this->hl['confirm'])) {
+            if ($this->hl['pass'] !== $this->hl['confirm']) {
+                $this->hl['confirm'] = '';
                 $this->_wg['wg_confirm'] = str_replace(
                         '{ W }', WG['wg_pass_not_match'], HTML['wg']
                 );
             }
-        } elseif (!empty($this->_hl['pass']) and empty($this->_hl['confirm'])) {
-            if (!empty($this->_hl['mail']) and ! empty($this->_hl['user'])) {
+        } elseif (!empty($this->hl['pass']) and empty($this->hl['confirm'])) {
+            if (!empty($this->hl['mail']) and ! empty($this->hl['user'])) {
                 $this->_wg['wg_confirm'] = str_replace(
                         '{ W }', WG['wg_pass_enter_confirm'], HTML['wg']
                 );
@@ -136,67 +128,14 @@ class Root extends \run\panel\core\corp\users\Users {
     private function _empty()
     {
         $hl = true;
-        foreach ($this->_hl as $v) {
+        foreach ($this->hl as $v) {
             !empty($v) ?: $hl = false;
         }
         $wg = true;
         foreach ($this->_wg as $v) {
             empty($v) ?: $wg = false;
         }
-        !($hl and $wg) ?: $this->_save_dir();
-    }
-
-    private function _save_dir()
-    {
-        $this->_hl['user'] = str_replace(' ', '^', $this->_hl['user']);
-        file_exists($this->dir['auth']) ?: mkdir($this->dir['auth']);
-        file_exists($this->dir['mail']) ?: mkdir($this->dir['mail']);
-        file_exists($this->dir['user']) ?: mkdir($this->dir['user']);
-        $this->dir['mail'] .= $this->_hl['mail'] . D;
-        $this->dir['user'] .= $this->_hl['user'] . D;
-        file_exists($this->dir['mail']) ?: mkdir($this->dir['mail']);
-        file_exists($this->dir['user']) ?: mkdir($this->dir['user']);
-        $this->_save_mail();
-    }
-
-    private function _save_mail()
-    {
-        file_put_contents($this->dir['mail'] . 'pass.sz', serialize([
-            'pass' => password_hash($this->_hl['pass'], PASSWORD_DEFAULT),
-            'time' => TIMESTAMP
-        ]));
-        file_put_contents($this->dir['mail'] . 'user.sz', serialize([
-            'user' => $this->_hl['user'],
-            'path' => $this->dir['user']
-        ]));
-        $this->_save_user();
-    }
-
-    private function _save_user()
-    {
-        $hash = $this->hash(32);
-        file_put_contents($this->dir['user'] . 'data.sz', serialize([
-            'created' => TIMESTAMP,
-            'mail' => $this->_hl['mail'],
-            'access' => 'root'
-        ]));
-        file_put_contents($this->dir['user'] . 'hash.sz', serialize([
-            'hash' => $hash,
-            'time' => TIMESTAMP,
-            'agent' => filter_input(5, 'HTTP_USER_AGENT')
-        ]));
-        setcookie('user', $this->_hl['user'], 0, '/');
-        setcookie('hash', $hash, 0, '/');
-        $this->_save_app();
-    }
-
-    private function _save_app()
-    {
-        $app = unserialize(file_get_contents(DATA . 'app.sz'));
-        $app['root'] = $this->_hl['user'];
-        file_put_contents(DATA . 'app.sz', serialize($app));
-        $this->ext = $app['ext'];
-        $this->header();
+        !($hl and $wg) ?: $this->save();
     }
 
 }
