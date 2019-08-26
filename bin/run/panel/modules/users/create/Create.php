@@ -23,7 +23,7 @@ class Create extends Save {
     {
         parent::__construct();
         $this->_access();
-        !$this->post ?: $this->_hl_empty($this->hl = $this->post);
+        !$this->input ?: $this->_hl_empty($this->hl = $this->input);
         $this->hl['access'] = $this->_access;
         define('HL', $this->hl + $this->_wg);
         define('MODULE', [
@@ -33,7 +33,7 @@ class Create extends Save {
 
     private function _access()
     {
-        $this->access = $this->post ? filter_input(0, 'access') : 'user';
+        $this->access = $this->input ? filter_input(0, 'access') : 'user';
         if (isset(LE['access'][$this->access])) {
             $access = '';
             foreach (LE['access'] as $k => $v) {

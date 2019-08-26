@@ -13,7 +13,7 @@ class Save extends \run\panel\core\corp\users\Users {
 
     protected function save()
     {
-        $this->hl['user'] = str_replace(' ', '^', $this->hl['user']);
+        $this->hl['user'] = str_replace(' ', '~', $this->hl['user']);
         file_exists($this->dir['auth']) ?: mkdir($this->dir['auth']);
         file_exists($this->dir['mail']) ?: mkdir($this->dir['mail']);
         file_exists($this->dir['user']) ?: mkdir($this->dir['user']);

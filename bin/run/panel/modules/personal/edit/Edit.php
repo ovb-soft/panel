@@ -13,7 +13,7 @@ class Edit extends Save {
     public function __construct()
     {
         parent::__construct();
-        $this->post ? $this->_old_data($this->hl = $this->post) : $this->_hl();
+        $this->input ? $this->_old_data($this->hl = $this->input) : $this->_hl();
         define('HL', $this->hl + $this->_wg);
         define('MODULE', [
             'content' => require 'html.php'
@@ -24,7 +24,7 @@ class Edit extends Save {
     {
         $this->hl = [
             'mail' => $this->mail,
-            'user' => str_replace('^', ' ', $this->user)
+            'user' => str_replace('~', ' ', $this->user)
         ];
     }
 
@@ -32,7 +32,7 @@ class Edit extends Save {
     {
         (
                 $this->hl['mail'] === $this->mail and
-                str_replace(' ', '^', $this->hl['user']) === $this->user
+                str_replace(' ', '~', $this->hl['user']) === $this->user
                 ) ? $this->header() : $this->_hl_empty();
     }
 

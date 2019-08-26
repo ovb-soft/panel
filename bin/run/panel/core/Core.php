@@ -2,7 +2,7 @@
 
 namespace run\panel\core;
 
-define('HTML', require 'html' . D . 'pattern.php');
+define('HTML', require 'pattern.php');
 
 new Auth;
 new lang\Lang;
@@ -24,7 +24,7 @@ class Core {
         define('TITLE', $this->const_title());
         define('ROUTE', $this->const_route());
         define('CONTENT', MODULE['content']);
-        require 'html' . D . 'template.php';
+        require 'template.php';
     }
 
     private function _core_lang()

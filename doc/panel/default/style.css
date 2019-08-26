@@ -86,6 +86,30 @@ input:focus{
 .red{
     color: rgb(255, 0, 0);
 }
+.size-13{
+    font-size: 13px;
+}
+.size-12{
+    font-size: 12px;
+}
+.size-11{
+    font-size: 11px;
+}
+.bold{
+    font-weight: bold;
+}
+.solid{
+    border-bottom: 1px solid rgb(207, 211, 221);
+}
+.solid-top{
+    border-top: 1px solid rgb(207, 211, 221);
+}
+.double{
+    border-bottom: 3px double rgb(207, 211, 221);
+}
+.double-top{
+    border-top: 3px double rgb(207, 211, 221);
+}
 /* -- end general -- */
 
 /* -- #header -- */
@@ -240,12 +264,19 @@ input:focus{
 /* -- end #menu -- */
 
 /* -- #table -- */
+#table .th{
+    padding: 9px 10px;
+    text-align: center;
+    border-bottom: 3px double rgb(207, 211, 221);
+}
 #table .block{
     padding: 9px 10px;
 }
+#table .input{
+    padding: 6px 10px;
+}
 #table .line{
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0 10px;
 }
 #table .line-left{
     padding-left: 10px;
@@ -253,33 +284,18 @@ input:focus{
 #table .line-right{
     padding-right: 10px;
 }
-#table .input{
-    padding: 6px 10px;
-}
-#table .solid{
-    border-bottom: 1px solid rgb(207, 211, 221);
-}
-#table .date{
-    padding-right: 10px;
-    font-size: 13px;
-}
-#table .time{
-    font-size: 12px;
-}
 #table .button{
+    display: block;
     margin-top: 1px;
     padding: 20px 10px 30px 10px;
     border-top: 1px solid rgb(207, 211, 221);
 }
-#table div.footer{
+#table .footer{
     margin-top: 1px;
     height: 30px;
     border-top: 1px solid rgb(207, 211, 221);
 }
-#table .bold{
-    font-weight: bold;
-}
-#table .double{
+#table .colspan{
     display: block;
     margin-top: 1px;
     padding: 10px 10px 20px 10px;

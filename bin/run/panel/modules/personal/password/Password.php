@@ -17,7 +17,7 @@ class Password extends Save {
     public function __construct()
     {
         parent::__construct();
-        !$this->post ?: $this->_hl_empty($this->hl = $this->post);
+        !$this->input ?: $this->_hl_empty($this->hl = $this->input);
         define('HL', $this->hl + $this->_wg);
         define('MODULE', [
             'content' => require 'html.php'

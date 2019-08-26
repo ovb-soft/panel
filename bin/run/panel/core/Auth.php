@@ -106,7 +106,12 @@ class Auth {
                     'time' => TIMESTAMP,
                     'agent' => $this->_data['agent']
                 ]))) {
-            return unserialize(file_get_contents($this->_data['path'] . 'data.sz'))['access'];
+            $data = unserialize(file_get_contents($this->_data['path'] . 'data.sz'));
+            return [
+                'access' => $data['access'],
+                'mail' => $data['mail'],
+                'created' => $data['created']
+            ];
         }
         return ['wg' => 4];
     }

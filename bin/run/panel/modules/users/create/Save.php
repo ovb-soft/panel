@@ -11,11 +11,46 @@ class Save extends \run\panel\core\corp\users\Users {
 
     protected function save()
     {
-        $this->hl['user'] = str_replace(' ', '^', $this->hl['user']);
+        $this->hl['user'] = str_replace(' ', '~', $this->hl['user']);
+        $this->dir['auth'] .= 'data' . D;
         $this->dir['mail'] .= $this->hl['mail'] . D;
         $this->dir['user'] .= $this->hl['user'] . D;
+        file_exists($this->dir['auth']) ?: mkdir($this->dir['auth']);
         file_exists($this->dir['mail']) ?: mkdir($this->dir['mail']);
         file_exists($this->dir['user']) ?: mkdir($this->dir['user']);
+        $this->_save_list_date();
+    }
+
+    private function _save_list_date()
+    {
+        $file = $this->dir['auth'] . 'date.sz';
+        $data = file_exists($file) ? unserialize(file_get_contents($file)) : [];
+        $data[$this->hl['user']] = TIMESTAMP;
+        if (file_put_contents($file, serialize($data)) === false) {
+            exit('Failed to write data to file.');
+        }
+        $this->_save_list_mail();
+    }
+
+    private function _save_list_mail()
+    {
+        $file = $this->dir['auth'] . 'mail.sz';
+        $data = file_exists($file) ? unserialize(file_get_contents($file)) : [];
+        $data[$this->hl['user']] = $this->hl['mail'];
+        if (file_put_contents($file, serialize($data)) === false) {
+            exit('Failed to write data to file.');
+        }
+        $this->_save_list_access();
+    }
+
+    private function _save_list_access()
+    {
+        $file = $this->dir['auth'] . 'access.sz';
+        $data = file_exists($file) ? unserialize(file_get_contents($file)) : [];
+        $data[$this->hl['user']] = $this->access;
+        if (file_put_contents($file, serialize($data)) === false) {
+            exit('Failed to write data to file.');
+        }
         $this->_save_mail();
     }
 

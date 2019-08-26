@@ -31,7 +31,7 @@ class Root extends Save {
         parent::__construct();
         REQUEST === '/' ?: $this->slash();
         define('LE', require 'lang' . D . LANG . '.php');
-        !$this->post ?: $this->_hl_empty($this->hl = $this->post);
+        !$this->input ?: $this->_hl_empty($this->hl = $this->input);
         define('HL', $this->hl + $this->_wg);
         require 'template.php';
     }

@@ -46,7 +46,7 @@ class App extends \DateTime {
     private function _error($path)
     {
         return (
-                preg_match('/^[\w\-\.\/\?\&\=\:]+$/iu', REQUEST) === 0 or
+                preg_match('/^[\w\-\.\/\?\&\=\:\~]+$/iu', REQUEST) === 0 or
                 preg_match('/\/\//', REQUEST) === 1 or
                 preg_match('/[\/]$/', $path) === 1 or
                 $this->_ext and empty($path)
