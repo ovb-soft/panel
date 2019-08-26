@@ -7,7 +7,7 @@ class Lang {
     public function __construct()
     {
         define('LANG', $this->_const_lang());
-        define('LT', (require 'langs.php')[LANG]);
+        define('LT', require 'lang' . D . LANG . '.php');
         define('LANGS', $this->_const_langs());
     }
 

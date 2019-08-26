@@ -29,9 +29,9 @@ class Core {
 
     private function _core_lang()
     {
-        $langs = MODULES . str_replace('/', D, PATH['path']) . D . 'langs.php';
+        $langs = MODULES . str_replace('/', D, PATH['path']) . D . 'lang' . D . LANG . '.php';
         if (file_exists($langs)) {
-            $lang = (require $langs)[LANG];
+            $lang = require $langs;
             !isset($lang['path']) ?: $this->path = $lang['path'];
             !isset($lang['le']) ?: $this->_core_le($lang['le']);
             !isset($lang['menu']) ?: $this->_core_menu($lang['menu']);

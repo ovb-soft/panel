@@ -12,7 +12,7 @@ class Login {
 
     public function __construct()
     {
-        define('LE_TMP', (require 'langs.php')[LANG]);
+        define('LE_TMP', require 'lang' . D . LANG . '.php');
         $this->_hl['mail'] = filter_has_var(0, 'mail') ? trim(filter_input(0, 'mail')) : '';
         !AUTH['wg'] ?: $this->_warning();
         define('HL', $this->_hl);

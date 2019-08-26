@@ -2,7 +2,7 @@
 
 namespace run\panel\core\corp\users;
 
-define('WG', (require 'langs.php')[LANG]);
+define('WG', require 'lang' . D . LANG . '.php');
 
 class Users {
 
